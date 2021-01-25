@@ -52,8 +52,9 @@ def show_images(image, title, pos):
 
 if __name__ == "__main__":
     # load data from file
-    img = cv2.imread("Data/lincoln.jpg", cv2.IMREAD_GRAYSCALE)
-    # my_hist = calculate_hist(img)
+    img = cv2.imread("Data/DIP/DIP3E_CH02_Original_Images/DIP3E_Original_Images_CH02/Fig0222(a)(face).tif",
+                     cv2.IMREAD_GRAYSCALE)
+    my_hist = calculate_hist(img)
 
     # show
     # show_charts(img.flatten(), my_hist)
