@@ -4,4 +4,3 @@ opencv-python
 sklearn
 torch
 numpy
-matplotlib
