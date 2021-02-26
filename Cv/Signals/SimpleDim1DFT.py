@@ -20,10 +20,6 @@ def correlative_sine_signals_without_phase_and_amplitude(x_axis, signals, basis)
     return c_k
 
 
-def correlative_complex_signals_with_phase_and_amplitude():
-    return
-
-
 def show_dft_bins(data):
     plt.bar(range(len(data)), data)
     plt.title('dft frequencies')
