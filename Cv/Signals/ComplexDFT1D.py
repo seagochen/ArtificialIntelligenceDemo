@@ -1,6 +1,5 @@
-import numpy as np
 from math import cos, sin, sqrt
-from Component import gen_sin_freq, gen_cos_freq, show_curve
+from Component import *
 from ComplexNumber import ComplexNumber
 
 
@@ -26,11 +25,11 @@ def calculate_ck(signals, N, k):
     return C_k
 
 
-def dft_1d(signals, sampling_freq, dft_lens):
+def dft_1d(signals):
     dft_bins = []
 
-    maximum_sampling_freq = sampling_freq  # 希望使用的采样最大频率
-    increased_sampling_freq = maximum_sampling_freq / dft_lens  # 采样率步进
+    maximum_sampling_freq = len(signals)  # 希望使用的采样最大频率
+    increased_sampling_freq = maximum_sampling_freq / len(signals)  # 采样率步进
     current_sampling_freq = 0  # 当前的采样率，从 0Hz 开始进行采样
 
     while current_sampling_freq < maximum_sampling_freq:
@@ -40,3 +39,9 @@ def dft_1d(signals, sampling_freq, dft_lens):
         current_sampling_freq += increased_sampling_freq
 
     return dft_bins
+
+
+if __name__ == "__main__":
+    xs, sigs = generate_original_signals(100)
+    dft = dft_1d(sigs)
+    validate_dft(sigs, dft)

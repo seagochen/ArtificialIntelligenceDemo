@@ -24,20 +24,35 @@ def show_curve(x, curve):
 def validate_dft(signal, my_dft):
     np_dft = np.fft.fft(signal, len(signal))
 
-    for i in range(50):
-        np_real = round(np_dft[i].real, 3)
-        np_imag = round(np_dft[i].imag, 3)
-        my_real = round(my_dft[i].real, 3)
-        my_imag = round(my_dft[i].img, 3)
+    for i in range(len(signal)):
+        np_real = round(np_dft[i].real, 4)
+        np_imag = round(np_dft[i].imag, 4)
+        my_real = round(my_dft[i].real, 4)
+        my_imag = round(my_dft[i].imag, 4)
 
-        var_real = np_real ** 2 - my_real ** 2
-        var_imag = np_imag ** 2 - my_imag ** 2
+        var_real = (np_real - my_real) ** 2
+        var_imag = (np_imag - my_imag) ** 2
 
         print(f"np:\t{np_real}\t{np_imag}\t\tdft:\t{my_real}\t{my_imag}\t\tvar\t{var_real}\t{var_imag}")
 
 
-def validate_idft(xaxis, signal):
-    np_dft = np.fft.fft(signal, len(signal))
-    np_sig = np.fft.ifft(np_dft)
+def validate_idft(signal, idft_sig):
 
-    show_curve(xaxis, np_sig)
+    for i in range(len(signal)):
+        sig = round(signal[i], 4)
+        idf = round(idft_sig[i], 4)
+
+        # var
+        var = (sig - idf) ** 2
+
+        print(f"pt:{i}\tsig:\t{sig}\t\tres:\t{idf}\t\tvar\t{var}")
+
+
+def compute_modulate(dft):
+    final = []
+    for i in range(len(dft)):
+        modulate = dft[i].real ** 2 + dft[i].imag ** 2
+        modulate = np.sqrt(modulate)
+        final.append(modulate)
+
+    return final
