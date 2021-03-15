@@ -82,17 +82,17 @@ def do_fft():
 
     # 生成频率数据，由于一部分数据属于不可见数据，所以需要进行gamma变换
     # 并执行归一化操作
-    gamma_spectrum = gen_spectrum(real_mat, imag_mat)
+    gamma = gen_spectrum(real_mat, imag_mat)
 
     # 为gamma图执行中央转换
     # 方法是1，3象限对调，2，4象限对调
-    shift_spectrum = shit_spectrum(gamma_spectrum)
+    shift = shift_spectrum(gamma)
 
     # 把原始图像、FFT频率图、转化后的频率图全部显示出来
     plt = PltImageCache()
     plt.add(img, "origin")
-    plt.add(gamma_spectrum, "dft computed")
-    plt.add(shift_spectrum, "dft shifted")
+    plt.add(gamma, "dft computed")
+    plt.add(shift, "dft shifted")
     plt.plots(1, 3)
 
     # 返回复数矩阵供下一步操作

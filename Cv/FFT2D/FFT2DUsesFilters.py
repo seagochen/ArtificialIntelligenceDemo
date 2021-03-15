@@ -1,7 +1,7 @@
 import cv2
 
 from Common import *
-
+from FreqFilters import *
 
 def load_img_grayscale(file: str):
     image = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
@@ -69,13 +69,34 @@ def do_ifft(fft2):
     return ifft2
 
 
+def show_spectrum(real, imag):
+    rows, cols = real.shape
+
+    # create a gamma matrix
+    gamma = np.zeros((rows, cols), dtype=np.float32)
+    cv2.magnitude(real, imag, gamma)
+    cv2.log(gamma + 1, gamma)
+
+    # normalize
+    cv2.normalize(gamma, gamma, 0, 1, cv2.NORM_MINMAX)
+
+    return gamma
+
+
 def ideal_filter(real, imag):
     # shift to center
     real_shifted = shift_spectrum(real)
     imag_shifted = shift_spectrum(imag)
 
     # do frequency filters
-    # ...
+    rows, cols = real.shape
+    mask = generate_ideal_mask(rows, cols, 60)
+
+    real_shifted = real_shifted * mask
+    imag_shifted = imag_shifted * mask
+
+    # generate visible spectrum
+    spectrum = show_spectrum(real_shifted, imag_shifted)
 
     # shift back
     real_output = shift_spectrum(real_shifted)
@@ -85,7 +106,7 @@ def ideal_filter(real, imag):
     complex_mat = cv2.merge((real_output, imag_output))
 
     # do idft
-    return do_ifft(complex_mat)
+    return do_ifft(complex_mat), spectrum
 
 
 def butterworth_filter(real, imag):
@@ -94,7 +115,14 @@ def butterworth_filter(real, imag):
     imag_shifted = shift_spectrum(imag)
 
     # do frequency filters
-    # ...
+    rows, cols = real.shape
+    mask = generate_butterworth_mask(rows, cols, 4, 30)
+
+    real_shifted = real_shifted * mask
+    imag_shifted = imag_shifted * mask
+
+    # generate visible spectrum
+    spectrum = show_spectrum(real_shifted, imag_shifted)
 
     # shift back
     real_output = shift_spectrum(real_shifted)
@@ -104,7 +132,7 @@ def butterworth_filter(real, imag):
     complex_mat = cv2.merge((real_output, imag_output))
 
     # do idft
-    return do_ifft(complex_mat)
+    return do_ifft(complex_mat), spectrum
 
 
 def gaussian_filter(real, imag):
@@ -135,17 +163,18 @@ def do_filters_demo():
     real, imag = do_fft(origin)
 
     # output from ideal filter
-    ideal_output = ideal_filter(real, imag)
-    butter_output = butterworth_filter(real, imag)
-    gaussian_output = gaussian_filter(real, imag)
+    # output, spectrum = ideal_filter(real, imag)
+    output, spectrum = butterworth_filter(real, imag)
+    # output, spectrum = gaussian_filter(real, imag)
 
     # plot images
     plt = PltImageCache()
     plt.add(origin, "origin")
-    plt.add(ideal_output, "ideal")
-    plt.add(butter_output, "Butterworth")
-    plt.add(gaussian_output, "Gaussian")
-    plt.plots(2, 2)
+    plt.add(output, "butt")
+    plt.add(spectrum, "spectrum")
+    # plt.add(butter_output, "Butterworth")
+    # plt.add(gaussian_output, "Gaussian")
+    plt.plots(1, 3)
 
 
 if __name__ == "__main__":
