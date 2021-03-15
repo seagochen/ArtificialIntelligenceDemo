@@ -8,7 +8,7 @@ def load_img_grayscale(file: str):
     return image
 
 
-def shit_spectrum(gamma_matrix):
+def shift_spectrum(gamma_matrix):
     rows, cols = gamma_matrix.shape
     cr = int(rows / 2)
     cc = int(cols / 2)
