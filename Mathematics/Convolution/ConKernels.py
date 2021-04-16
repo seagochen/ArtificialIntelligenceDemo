@@ -1,6 +1,6 @@
 import cv2
 
-from Common import *
+from Tools.ImagePlot import *
 
 
 def convolution_kernel(data, kernel):

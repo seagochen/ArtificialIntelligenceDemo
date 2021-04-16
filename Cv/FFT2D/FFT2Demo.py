@@ -1,6 +1,7 @@
 import cv2
+import numpy as np
 
-from Common import *
+from Tools.ImagePlot import *
 
 
 def load_img_grayscale(file: str):

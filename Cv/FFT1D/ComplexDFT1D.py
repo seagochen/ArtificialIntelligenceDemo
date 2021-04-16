@@ -1,4 +1,4 @@
-from math import cos, sin, sqrt
+from math import cos, sin
 from Component import *
 from ComplexNumber import ComplexNumber
 

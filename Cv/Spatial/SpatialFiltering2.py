@@ -1,6 +1,7 @@
 import cv2
+import numpy as np
 
-from Common import *
+from Tools.ImagePlot import *
 
 
 def laplacian_kernel(image, i, j):

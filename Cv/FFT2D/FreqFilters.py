@@ -56,13 +56,3 @@ def generate_butterworth_mask(rows, cols, n, d, flip=False):
         output = 1 - output
 
     return output
-
-
-if __name__ == "__main__":
-    mask = generate_butterworth_mask(30, 50, 1, 2)
-
-    from Common import *
-
-    plt = PltImageCache()
-    plt.add(mask, "butter")
-    plt.plots()
