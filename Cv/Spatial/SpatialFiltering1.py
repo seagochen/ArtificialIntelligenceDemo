@@ -2,7 +2,7 @@ import cv2
 import random
 import numpy as np
 
-from Tools.ImagePlot import *
+from Cv.Tools.ImagePlot import *
 
 
 def adjustable_mean_kernel(image, size, i, j):

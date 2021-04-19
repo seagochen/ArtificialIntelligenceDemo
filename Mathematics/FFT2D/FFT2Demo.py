@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Tools.ImagePlot import *
+from Cv.CvTools.ImagePlot import PltImageCache
 
 
 def load_img_grayscale(file: str):

@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 
-from Tools.ImagePlot import *
+from Cv.CvTools.ImagePlot import PltImageCache
 from FreqFilters import *
+
 
 def load_img_grayscale(file: str):
     image = cv2.imread(file, cv2.IMREAD_GRAYSCALE)

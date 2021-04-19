@@ -2,7 +2,7 @@ import math
 import numpy as np
 import random
 import cv2
-from ShowImage import PltImageCache
+from Cv.CvTools.ImagePlot import PltImageCache
 import matplotlib.pyplot as plt
 
 

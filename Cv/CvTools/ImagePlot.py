@@ -8,6 +8,7 @@ class ImageDescriptionToken(object):
         self.img = image
         self.title = title
 
+
 class PltImageCache(object):
 
     def __init__(self):

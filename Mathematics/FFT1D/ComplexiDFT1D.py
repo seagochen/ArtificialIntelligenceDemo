@@ -1,8 +1,7 @@
 from math import cos, sin
 
-from Component import *
 from ComplexDFT1D import dft_1d
-from ComplexNumber import ComplexNumber
+from Component import *
 
 
 def generate_original_signals(pts: int):
