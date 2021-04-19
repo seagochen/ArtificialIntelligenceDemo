@@ -1,6 +1,7 @@
 import cv2
+import numpy as np
 
-from Cv.Tools.ImagePlot import *
+from Cv.CvTools.DiagramPlotter import DiagramPlotter
 
 
 def convolution_kernel(data, kernel):
@@ -46,7 +47,7 @@ def read_image(path):
 
 if __name__ == "__main__":
     img = read_image("Data/Illustrations/1.jpeg")
-    plt = PltImageCache()
+    plt = DiagramPlotter()
 
     # # 均值
     # kernel = np.array([[1 / 9, 1 / 9, 1 / 9],
@@ -133,6 +134,6 @@ if __name__ == "__main__":
 
     # plots images
     plt.clean()
-    plt.add(img, "original")
-    plt.add(output, "laplacian")
-    plt.plots(1, 2)
+    plt.append_image(img, "original")
+    plt.append_image(output, "laplacian")
+    plt.show(1, 2)

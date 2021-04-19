@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 
-def hist(img):
+def calculate_hist(img):
     histogram = np.zeros(256, dtype=np.uint64)
 
     row, col = img.shape

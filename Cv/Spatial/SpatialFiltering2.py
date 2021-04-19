@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Cv.Tools.ImagePlot import *
+from Cv.CvTools.DiagramPlotter import DiagramPlotter
 
 
 def laplacian_kernel(image, i, j):
@@ -30,10 +30,10 @@ def laplacian_op_test(filename):
     output = laplacian_operator(img)
 
     # plots images
-    plt = PltImageCache()
-    plt.add(img, "original")
-    plt.add(output, "laplacian operator")
-    plt.plots(1, 2)
+    plt = DiagramPlotter()
+    plt.append_image(img, "original")
+    plt.append_image(output, "laplacian operator")
+    plt.show(1, 2)
 
 
 def laplacian_kernel_mod(image, i, j, k):
@@ -69,10 +69,10 @@ def laplacian_op_test_mod(filename):
     output = laplacian_operator_mod(img, 2.5)
 
     # plots images
-    plt = PltImageCache()
-    plt.add(img, "original")
-    plt.add(output, "enhanced")
-    plt.plots(1, 2)
+    plt = DiagramPlotter()
+    plt.append_image(img, "original")
+    plt.append_image(output, "enhanced")
+    plt.show(1, 2)
 
 
 if __name__ == "__main__":

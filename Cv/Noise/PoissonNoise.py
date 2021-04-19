@@ -2,9 +2,9 @@ import math
 import numpy as np
 import random
 import cv2
-from Cv.CvTools.ImagePlot import PltImageCache
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+from Cv.CvTools.DiagramPlotter import DiagramPlotter
 
 def poisson_distribution(lam: float, limits: int):
     distributions = []
@@ -216,9 +216,9 @@ if __name__ == "__main__":
     # lam_35 = poisson_noise2(img)
 
     # plot images
-    pt = PltImageCache()
-    pt.add(img, "original")
+    pt = DiagramPlotter()
+    pt.append_image(img, "original")
     # pt.add(lam_15, "lambda 1.5")
     # pt.add(lam_25, "lambda 2.5")
-    pt.add(lam_15, "lambda is 1.0")
-    pt.plots(1, 2)
+    pt.append_image(lam_15, "lambda is 1.0")
+    pt.show(1, 2)

@@ -2,7 +2,7 @@ import cv2
 import random
 import numpy as np
 
-from Cv.Tools.ImagePlot import *
+from Cv.CvTools.DiagramPlotter import DiagramPlotter
 
 
 def adjustable_mean_kernel(image, size, i, j):
@@ -39,10 +39,10 @@ def mean_filter_test(filename):
     output = mean_kernel(img, 5)
 
     # plots images
-    plt = PltImageCache()
-    plt.add(img, "original")
-    plt.add(output, "mean kernel")
-    plt.plots(1, 2)
+    plt = DiagramPlotter()
+    plt.append_image(img, "original")
+    plt.append_image(output, "mean kernel")
+    plt.show(1, 2)
 
 
 def adjustable_median_kernel(image, size, i, j):
@@ -104,11 +104,11 @@ def median_filter_test(filename):
     output = median_kernel(sp_img, 5)
 
     # plots images
-    plt = PltImageCache()
-    plt.add(img, "original")
-    plt.add(sp_img, "salt pepper, 5%")
-    plt.add(output, "median kernel")
-    plt.plots(1, 3)
+    plt = DiagramPlotter()
+    plt.append_image(img, "original")
+    plt.append_image(sp_img, "salt pepper, 5%")
+    plt.append_image(output, "median kernel")
+    plt.show(1, 3)
 
 
 if __name__ == "__main__":
