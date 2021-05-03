@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("Data/DIP/DIP3E_CH02_Original_Images/DIP3E_Original_Images_CH02/Fig0219(rose1024).tif",
+img = cv2.imread("../../Data/DIP/DIP3E_CH02_Original_Images/DIP3E_Original_Images_CH02/Fig0219(rose1024).tif",
                  cv2.IMREAD_GRAYSCALE)
 
 # test image exist
