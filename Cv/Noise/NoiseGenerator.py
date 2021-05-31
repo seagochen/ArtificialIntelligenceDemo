@@ -26,15 +26,6 @@ def salt_pepper_noise(image, ratio):
     return output
 
 
-# def gaussian_noise_kernel(x, mu, sigma):
-#     exp = math.exp(-1 * (
-#                        math.pow(x - mu, 2) / (2 * math.pow(sigma, 2))
-#                    ))
-#     peak = (math.sqrt(2 * 3.14159) * sigma)
-#
-#     return exp / peak
-
-
 def gaussian_noise_kernel(x, mu, sigma):
     return np.exp(-1 * ((x - mu) ** 2) / (2 * (sigma ** 2))) / (math.sqrt(2 * np.pi) * sigma)
 

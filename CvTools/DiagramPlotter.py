@@ -28,14 +28,26 @@ class HistDescriptionToken(object):
 
 
 class BarDescriptionToken(object):
+    
     def __init__(self, chart, title):
         self.chart = chart
         self.bins = np.arange(len(chart))
-        # print(self.bins)
         self.title = title
 
     def process(self):
         plt.bar(x=self.bins, height=self.chart)
+        plt.title(self.title)
+
+
+class PointsDescriptionToken(object):
+    
+    def __init__(self, x, y, title):
+        self.x = x
+        self.y = y
+        self.title = title
+
+    def process(self):
+        plt.plot(self.x, self.y)
         plt.title(self.title)
 
 
@@ -44,14 +56,19 @@ class DiagramPlotter(object):
     def __init__(self):
         self.tokens = []
 
+    def append_image(self, image, title="image"):
+        img = ImageDescriptionToken(image, title)
+        self.tokens.append(img)
+        return self
+
     def append_hist(self, histogram, title="hist"):
         hist = HistDescriptionToken(histogram, title)
         self.tokens.append(hist)
         return self
 
-    def append_image(self, image, title="image"):
-        img = ImageDescriptionToken(image, title)
-        self.tokens.append(img)
+    def append_pts(self, x, y, title="pts"):
+        pts = PointsDescriptionToken(x, y, title)
+        self.tokens.append(pts)
         return self
 
     def append_bars(self, bars, title="bar"):
