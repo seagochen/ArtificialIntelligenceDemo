@@ -1,18 +1,16 @@
-import math
 import numpy as np
+from CvTools.DiagramPlotter import DiagramPlotter as Diagram
 
 
 def gaussian_noise_kernel(x, mu, sigma):
-    exp = math.exp(-1 * (math.pow(x - mu, 2) / (2 * math.pow(sigma, 2))))
-    peak = (math.sqrt(2 * 3.14159) * sigma)
-    return exp / peak
-
-
-def generate_x_points(pts, start, end):
-    return np.linspace(start, end, pts)
+    return np.exp(-1 * ((x - mu) ** 2) / (2 * (sigma ** 2))) / (np.sqrt(2 * np.pi) * sigma)
 
 
 if __name__ == "__main__":
 
-    y_pts = gaussian_noise_kernel(generate_x_points(-10, 10, 1000), 1.0, 3)
-    print(y_pts)
+    x_pts = np.linspace(-10, 20, 1000)
+    y_pts = gaussian_noise_kernel(x_pts, 5.0, 3)
+    
+    plot = Diagram()
+    plot.append_pts(x_pts, y_pts)
+    plot.show()
