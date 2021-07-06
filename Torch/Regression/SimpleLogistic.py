@@ -1,36 +1,30 @@
 import torch
 
 x_data = torch.Tensor([[1.0], [2.0], [3.0]])  # 1 column x 3 rows
-y_data = torch.Tensor([[2.0], [4.0], [6.0]])
+y_data = torch.Tensor([[0], [0], [1]])  # false false true
 
 
-class SimpleLinearModel(torch.nn.Module):
-    """
-    Applies a linear transformation to the incoming data: y = xA^T + b
-    """
+class SimpleLogisticModel(torch.nn.Module):
 
     def __init__(self):
         super().__init__()
         self.linear = torch.nn.Linear(1, 1)
         """
-        torch.nn.Linear(n_features, out_features, bias=True, device=None, dtype=None)
-        * in_features – size of each input sample
-        * out_features – size of each output sample
-        * bias – If set to False, the layer will not learn an additive bias. Default: True
+        Regression analysis of the data was
+        continued using the linear model
         """
 
     def forward(self, x):
-        y_predict_value = self.linear.forward(x)
-        # y_predict_value = self.linear(x)  # both ok
-        return y_predict_value
+        y_predicted = torch.sigmoid(self.linear(x))
+        return y_predicted
 
 
 if __name__ == "__main__":
     # fitting modle
-    model = SimpleLinearModel()
+    model = SimpleLogisticModel()
 
     # LOSS function
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.BCELoss(size_average=False)
 
     # parameters optimizer
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1)  # stochastic gradient descent
@@ -38,11 +32,11 @@ if __name__ == "__main__":
     # training and do gradient descent calculation
     for epoch in range(500):
         # forward
-        y_predict_value = model(x_data)
-        # y_predict_value = model.forward(x_data)
+        # y_predict_value = model(x_data)
+        y_predicted_value = model.forward(x_data)
 
         # use MSE to check the deviation
-        loss = criterion(y_predict_value, y_data)
+        loss = criterion(y_predicted_value, y_data)
 
         # print for debug
         print(epoch, loss.item())
@@ -61,9 +55,10 @@ if __name__ == "__main__":
     print("bias = ", model.linear.bias.item())
 
     # test values
-    x_test = torch.Tensor([4.0])
+    x_test = torch.Tensor([5.0])
     y_test = model(x_test)
 
     # print out result
     print("final y = ", y_test.data)
+
 
