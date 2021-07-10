@@ -113,24 +113,13 @@ def rgb_2_black(rgb_file: str):
     return image_gray
 
 
-if __name__ == "__main__":
-    # show_image(rgb_2_gray_normal("Data/lenna_rgb.tif"), "RGB2Gray General")
-    # show_image(rgb_2_gray_avg("Data/lenna_rgb.tif"), "RGB2Gray Average")
-    # show_image(rgb_2_gray_brightness("Data/lenna_rgb.tif"), "Brightness First")
-    # show_image(rgb_2_gray_min("Data/lenna_rgb.tif"), "Min")
-    # show_image(rgb_2_gray_max("Data/lenna_rgb.tif"), "Max")
-    # show_image(rgb_2_black("Data/lenna_rgb.tif"), "Black & White")
+def rgb_convert_test():
 
-    norm = rgb_2_gray_normal("Data/lenna_rgb.tif")
-    avg = rgb_2_gray_avg("Data/lenna_rgb.tif")
-    bright = rgb_2_gray_brightness("Data/lenna_rgb.tif")
-    minimum = rgb_2_gray_min("Data/lenna_rgb.tif")
-    maximum = rgb_2_gray_max("Data/lenna_rgb.tif")
+    origin_img = "Data/Illustrations/kono_sekai.jpg"
 
-    show_images(norm, "norm", 1)
-    show_images(avg, "avg", 2)
-    show_images(bright, "bright", 3)
-    show_images(minimum, "min", 4)
-    show_images(maximum, "max", 5)
-
-    plt.show()
+    show_image(rgb_2_gray_normal(origin_img), "RGB2Gray General")
+    show_image(rgb_2_gray_avg(origin_img), "RGB2Gray Average")
+    show_image(rgb_2_gray_brightness(origin_img), "Brightness First")
+    show_image(rgb_2_gray_min(origin_img), "Min")
+    show_image(rgb_2_gray_max(origin_img), "Max")
+    show_image(rgb_2_black(origin_img), "Black & White")

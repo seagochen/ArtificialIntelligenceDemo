@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def laplacian_kernel(image, i, j):
@@ -64,8 +64,8 @@ def laplacian_operator_mod(image, k):
     return backup
 
 
-def laplacian_op_test_mod(filename):
-    img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
+def laplacian_op_test():
+    img = cv2.imread("Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0338(a)(blurry_moon).tif", cv2.IMREAD_GRAYSCALE)
     output = laplacian_operator_mod(img, 2.5)
 
     # plots images
@@ -73,8 +73,3 @@ def laplacian_op_test_mod(filename):
     plt.append_image(img, "original")
     plt.append_image(output, "enhanced")
     plt.show(1, 2)
-
-
-if __name__ == "__main__":
-    laplacian_op_test_mod("D:/Repositories/Repo/AlgorithmsLearning/Data/DIP/"
-                      "DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0338(a)(blurry_moon).tif")

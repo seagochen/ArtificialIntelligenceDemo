@@ -2,7 +2,7 @@ import cv2
 import random
 import numpy as np
 
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def adjustable_mean_kernel(image, size, i, j):
@@ -98,8 +98,8 @@ def salt_pepper_noise(image, ratio):
     return output
 
 
-def median_filter_test(filename):
-    img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
+def median_filter_test():
+    img = cv2.imread("Data/Illustrations/kana.jpg", cv2.IMREAD_GRAYSCALE)
     sp_img = salt_pepper_noise(img, .05)
     output = median_kernel(sp_img, 5)
 
@@ -109,7 +109,3 @@ def median_filter_test(filename):
     plt.append_image(sp_img, "salt pepper, 5%")
     plt.append_image(output, "median kernel")
     plt.show(1, 3)
-
-
-if __name__ == "__main__":
-    median_filter_test("D:/Repositories/Repo/AlgorithmsLearning/Data/jpegs/kana_hasimoto.jpg")

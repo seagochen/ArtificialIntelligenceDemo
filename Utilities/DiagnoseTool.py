@@ -13,6 +13,11 @@ def calculate_hist(img):
     return histogram
 
 
-def load_image(file: str):
+def load_image_gray(file: str):
     image = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+    return image
+
+
+def load_image_color(file: str):
+    image = cv2.imread(file, cv2.IMREAD_COLOR)
     return image

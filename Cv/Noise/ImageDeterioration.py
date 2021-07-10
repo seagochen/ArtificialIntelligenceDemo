@@ -1,15 +1,15 @@
-from Cv.CvTools.DiagnosticTool import load_image
-from Cv.CvTools.DiagnosticTool import calculate_hist
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagnoseTool import load_image_gray
+from Utilities.DiagnoseTool import calculate_hist
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def analysis_image_hists(filepath: str):
-    img = load_image(filepath)
+    img = load_image_gray(filepath)
     img_hist = calculate_hist(img)
     return img, img_hist
 
 
-if __name__ == "__main__":
+def img_deterioration_test():
 
     img_1, hist_1 = analysis_image_hists("./Data/DIP/DIP3E_CH05_Original_Images/DIP3E_CH05_Original_Images/"
                                          "Fig0503 (original_pattern).tif")

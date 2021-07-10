@@ -90,27 +90,27 @@ def gamma_transform(file: str, c,
     show_gamma_images(image, gamma1, t1, gamma2, t2, gamma3, t3)
 
 
-if __name__ == "__main__":
+def intensity_test_1():
     # image negative
-    # image_negative("Data/breast_digital_Xray.tif")
+    image_negative("Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0304(a)(breast_digital_Xray).tif")
 
     # log transform
-    # log_transform("Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0305(a)(DFT_no_log).tif")
+    log_transform("Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0305(a)(DFT_no_log).tif")
 
     # gamma transform
-    # gamma_transform(
-    #     "Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0308(a)(fractured_spine).tif",
-    #     1,
-    #     0.6, "gamma 0.6",
-    #     0.4, "gamma 0.4",
-    #     0.3, "gamma 0.3"
-    # )
-    # gamma_transform(
-    #     "Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0309(a)(washed_out_aerial_image).tif",
-    #     1,
-    #     3, "gamma 3",
-    #     4, "gamma 4",
-    #     5, "gamma 5"
-    # )
+    gamma_transform(
+        "Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0308(a)(fractured_spine).tif",
+        1,
+        0.6, "gamma 0.6",
+        0.4, "gamma 0.4",
+        0.3, "gamma 0.3"
+    )
+    gamma_transform(
+        "Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0309(a)(washed_out_aerial_image).tif",
+        1,
+        3, "gamma 3",
+        4, "gamma 4",
+        5, "gamma 5"
+    )
 
     pass

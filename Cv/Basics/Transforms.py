@@ -50,10 +50,7 @@ def reshape_image(image):
     show_image2(amplified_2, "Amplified with cubic", 4)
 
 
-def show_rotated_images():
-    # load image from src
-    logo = cv2.imread("Data/cv_logo.png")
-
+def show_rotated_images(logo):
     # convert to RGB first
     logo = cv2.cvtColor(logo, cv2.COLOR_BGR2RGB)
 
@@ -67,16 +64,9 @@ def show_rotated_images():
     plt.show()
 
 
-def show_reshaped_images():
-    # load image from src
-    fp = cv2.imread("Data/finger.tif")
-
+def show_reshaped_images(logo):
     # reshape the images
-    reshape_image(fp)
+    reshape_image(logo)
 
     # plot results
     plt.show()
-
-
-if __name__ == "__main__":
-    show_reshaped_images()

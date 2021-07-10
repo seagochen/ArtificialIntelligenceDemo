@@ -4,7 +4,8 @@ import random
 import cv2
 
 import matplotlib.pyplot as plt
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagramPlotter import DiagramPlotter
+
 
 def poisson_distribution(lam: float, limits: int):
     distributions = []
@@ -180,45 +181,32 @@ def gamma_transform(file: str, c, p_list, amplify,
     show_gamma_images(image, gamma1, t1, gamma2, t2, gamma3, t3)
 
 
-if __name__ == "__main__":
+def poisson_noise_test():
     # read image from file
-    img = cv2.imread("Data/JPG/Asakura Yuu/1.jpg", cv2.IMREAD_GRAYSCALE)
-
-    # # poisson noise
-    # d = poisson_distribution(3.5, 100)
-    # p_list = generate_poisson_list(d, 1000)
-    #
-    # # normalization the pixels
-    # gamma_transform(
-    #     "Data/JPG/Asakura Yuu/1.jpg",
-    #     1, p_list, 5,
-    #     1.0, "gamma 1 with lam is 3.5 x 5",
-    #     20, "gamma 20 with lam is 3.5 x 5",
-    #     80, "gamma 80 with lam is 3.5 x 5"
-    # )
+    img = cv2.imread("Data/Illustrations/kana.jpg", cv2.IMREAD_GRAYSCALE)
 
     # poisson noise image with lambda is 1.5
-    d = poisson_distribution(1, 100)
-    p_list = generate_poisson_list(d, 1000)
-    lam_15 = poisson_noise1(img, p_list, 100)
-    lam_15 = poisson_noise2(img, 1)
+    # d = poisson_distribution(1.5, 100)
+    # p_list = generate_poisson_list(d, 1000)
+    # lam_15 = poisson_noise1(img, p_list, 100,  1.5)
+    # lam_15 = poisson_noise2(img, 1)
 
     # poisson noise image with lambda is 2.5
-    # d = poisson_distribution(2.5, 100)
-    # p_list = generate_poisson_list(d, 1000)
-    # lam_25 = poisson_noise1(img, p_list, 1)
-    # lam_25 = poisson_noise2(img)
+    d = poisson_distribution(1.5, 1000)
+    p_list = generate_poisson_list(d, 1000)
+    lam_12 = poisson_noise1(img, p_list, 50, 1.5)
+    # lam_25 = poisson_noise2(img, 1.2)
 
     # poisson noise image with lambda is 3.5
     # d = poisson_distribution(3.5, 100)
     # p_list = generate_poisson_list(d, 1000)
-    # lam_35 = poisson_noise1(img, p_list, 1)
-    # lam_35 = poisson_noise2(img)
+    # lam_35 = poisson_noise1(img, p_list, 100, 3.5)
+    # lam_35 = poisson_noise2(img, 3.5)
 
     # plot images
     pt = DiagramPlotter()
     pt.append_image(img, "original")
-    # pt.add(lam_15, "lambda 1.5")
-    # pt.add(lam_25, "lambda 2.5")
-    pt.append_image(lam_15, "lambda is 1.0")
+    # pt.append_image(lam_25, "lambda 1.5")
+    pt.append_image(lam_12, "lambda 1.2")
+    # pt.append_image(lam_35, "lambda 3.5")
     pt.show(1, 2)

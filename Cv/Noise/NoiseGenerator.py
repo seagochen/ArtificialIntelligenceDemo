@@ -5,7 +5,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def salt_pepper_noise(image, ratio):
@@ -133,7 +133,7 @@ def gaussian_noise(image, ratio, sigma):
 
 
 def salt_pepper_demo():
-    img = cv2.imread("Data/JPG/Asakura Yuu/1.jpg", cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread("Data/Illustrations/kana.jpg", cv2.IMREAD_GRAYSCALE)
 
     # add salt pepper noise
     spn_30_img = salt_pepper_noise(img, .30)  # 30%
@@ -149,7 +149,7 @@ def salt_pepper_demo():
 
 
 def gaussian_demo():
-    img = cv2.imread("Data/JPG/Asakura Yuu/1.jpg", cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread("Data/Illustrations/kana.jpg", cv2.IMREAD_GRAYSCALE)
 
     # add gaussian noise
     gass_30_img = gaussian_noise(img, .30, 1)  # 30%
@@ -164,8 +164,8 @@ def gaussian_demo():
     plt.show(2, 2)
 
 
-if __name__ == "__main__":
-    # salt_pepper_demo()
-    #gaussian_demo()
-    #plot_gaussian_noise()
+def noise_generator_test():
+    salt_pepper_demo()
+    gaussian_demo()
+    plot_gaussian_noise()
     plot_gaussian_distribution()

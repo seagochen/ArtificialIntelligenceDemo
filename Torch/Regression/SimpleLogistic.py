@@ -1,7 +1,7 @@
 import torch
 
-x_data = torch.Tensor([[1.0], [2.0], [3.0]])  # 1 column x 3 rows
-y_data = torch.Tensor([[0], [0], [1]])  # false false true
+x_data = torch.Tensor([[0.1], [0.3], [0.5], [0.7], [0.9], [1.1], [1.3], [1.5], [1.7], [1.9]])  # 1 column x 10 rows
+y_data = torch.Tensor([[1], [1], [1], [1], [1], [1], [1], [0], [0], [0]])  # 0 - false, 1 - true
 
 
 class SimpleLogisticModel(torch.nn.Module):
@@ -55,10 +55,8 @@ if __name__ == "__main__":
     print("bias = ", model.linear.bias.item())
 
     # test values
-    x_test = torch.Tensor([5.0])
+    x_test = torch.Tensor([1.4])
     y_test = model(x_test)
 
     # print out result
     print("final y = ", y_test.data)
-
-

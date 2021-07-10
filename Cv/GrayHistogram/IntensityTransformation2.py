@@ -39,7 +39,7 @@ def show_images(image1, image2):
     plt.show()
 
 
-if __name__ == "__main__":
+def intensity_test_2():
     # load image from file
     org_image = cv2.imread("Data/DIP/DIP3E_CH03_Original_Images/DIP3E_Original_Images_CH03/Fig0316(4)(bottom_left).tif")
 
