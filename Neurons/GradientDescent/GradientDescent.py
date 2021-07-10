@@ -1,4 +1,4 @@
-from CvTools import DataFile as csv
+from Utilities import DataFile as csv
 import numpy as np
 
 
@@ -40,7 +40,7 @@ def update(mu, sigma, x, y, cost_val, learning_rate):
     return mu, sigma
 
 
-if __name__ == "__main__":
+def run_gradient():
     x, y = load_data()
     mu = 100
     sigma = 100

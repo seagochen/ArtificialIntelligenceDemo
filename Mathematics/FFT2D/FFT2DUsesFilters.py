@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Cv.CvTools.ImagePlot import PltImageCache
+from Utilities.DiagramPlotter import DiagramPlotter
 from FreqFilters import *
 
 
@@ -170,13 +170,13 @@ def do_filters_demo():
     # output, spectrum = gaussian_filter(real, imag)
 
     # plot images
-    plt = PltImageCache()
-    plt.add(origin, "origin")
-    plt.add(output, "butt")
-    plt.add(spectrum, "spectrum")
+    plt = DiagramPlotter()
+    plt.append_image(origin, "origin")
+    plt.append_image(output, "butt")
+    plt.append_image(spectrum, "spectrum")
     # plt.add(butter_output, "Butterworth")
     # plt.add(gaussian_output, "Gaussian")
-    plt.plots(1, 3)
+    plt.show(1, 3)
 
 
 if __name__ == "__main__":

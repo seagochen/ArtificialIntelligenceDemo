@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Cv.CvTools.DiagramPlotter import DiagramPlotter
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def convolution_kernel(data, kernel):
@@ -45,85 +45,85 @@ def read_image(path):
     return img
 
 
-if __name__ == "__main__":
-    img = read_image("Data/Illustrations/1.jpeg")
+def convolution_test():
+    img = read_image("Data/Illustrations/kana.jpg")
     plt = DiagramPlotter()
 
     # # 均值
-    # kernel = np.array([[1 / 9, 1 / 9, 1 / 9],
-    #                    [1 / 9, 1 / 9, 1 / 9],
-    #                    [1 / 9, 1 / 9, 1 / 9]])
-    # output = image_convolution(img, kernel)
-    #
-    # # plots images
-    # plt.add(img, "original")
-    # plt.add(output, "mean")
-    # plt.plots(1, 2)
-    #
-    # # gaussian
-    # kernel = np.array([[0.095, 0.118, 0.095],
-    #                    [0.118, 0.148, 0.118],
-    #                    [0.095, 0.118, 0.095]])
-    #
-    # output = image_convolution(img, kernel)
+    kernel = np.array([[1 / 9, 1 / 9, 1 / 9],
+                       [1 / 9, 1 / 9, 1 / 9],
+                       [1 / 9, 1 / 9, 1 / 9]])
+    output = image_convolution(img, kernel)
 
-    # # plots images
-    # plt.clean()
-    # plt.add(img, "original")
-    # plt.add(output, "gaussian")
-    # plt.plots(1, 2)
-    #
-    # # sharp
-    # kernel = np.array([[-1, -1, -1],
-    #                    [-1, 9, -1],
-    #                    [-1, -1, -1]])
-    #
-    # output = image_convolution(img, kernel)
-    #
-    # # plots images
-    # plt.clean()
-    # plt.add(img, "original")
-    # plt.add(output, "enhance")
-    # plt.plots(1, 2)
+    # plots images
+    plt.append_image(img, "original")
+    plt.append_image(output, "mean")
+    plt.show(1, 2)
+
+    # gaussian
+    kernel = np.array([[0.095, 0.118, 0.095],
+                       [0.118, 0.148, 0.118],
+                       [0.095, 0.118, 0.095]])
+
+    output = image_convolution(img, kernel)
+
+    # plots images
+    plt.clean()
+    plt.append_image(img, "original")
+    plt.append_image(output, "gaussian")
+    plt.show(1, 2)
+
+    # sharp
+    kernel = np.array([[-1, -1, -1],
+                       [-1, 9, -1],
+                       [-1, -1, -1]])
+
+    output = image_convolution(img, kernel)
+
+    # plots images
+    plt.clean()
+    plt.append_image(img, "original")
+    plt.append_image(output, "enhance")
+    plt.show(1, 2)
 
     # gradient
-    # kernel = np.array([[0, -1, 0],
-    #                    [-1, 0, 1],
-    #                    [0, 1, 0]])
-    #
-    # output = image_convolution(img, kernel)
-    #
-    # # plots images
-    # plt.clean()
-    # plt.add(img, "original")
-    # plt.add(output, "gradient")
-    # plt.plots(1, 2)
+    kernel = np.array([[0, -1, 0],
+                       [-1, 0, 1],
+                       [0, 1, 0]])
+
+    output = image_convolution(img, kernel)
+
+    # plots images
+    plt.clean()
+    plt.append_image(img, "original")
+    plt.append_image(output, "gradient")
+    plt.show(1, 2)
 
     # horizontal
-    # kernel = np.array([[-1, -1, -1],
-    #                    [0, 0, 0],
-    #                    [1, 1, 1]])
+    kernel = np.array([[-1, -1, -1],
+                       [0, 0, 0],
+                       [1, 1, 1]])
+    #
+    output = image_convolution(img, kernel)
 
-    # output = image_convolution(img, kernel)
-    #
-    # # plots images
-    # plt.clean()
-    # plt.add(img, "original")
-    # plt.add(output, "horizontal")
-    # plt.plots(1, 2)
-    #
-    # # vertical
-    # kernel = np.array([[-1, 0, 1],
-    #                    [-1, 0, 1],
-    #                    [-1, 0, 1]])
-    #
-    # output = image_convolution(img, kernel)
-    #
-    # # plots images
-    # plt.clean()
-    # plt.add(img, "original")
-    # plt.add(output, "vertical")
-    # plt.plots(1, 2)
+    # plots images
+    plt.clean()
+    plt.append_image(img, "original")
+    plt.append_image(output, "horizontal")
+    plt.show(1, 2)
+
+    # vertical
+    kernel = np.array([[-1, 0, 1],
+                       [-1, 0, 1],
+                       [-1, 0, 1]])
+
+    output = image_convolution(img, kernel)
+
+    # plots images
+    plt.clean()
+    plt.append_image(img, "original")
+    plt.append_image(output, "vertical")
+    plt.show(1, 2)
 
     # vertical
     kernel = np.array([[0, 1, 0],

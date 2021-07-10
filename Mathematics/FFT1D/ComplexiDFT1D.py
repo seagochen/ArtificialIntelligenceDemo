@@ -1,7 +1,7 @@
 from math import cos, sin
 
-from ComplexDFT1D import dft_1d
-from Component import *
+from Mathematics.FFT1D.ComplexDFT1D import dft_1d
+from Mathematics.FFT1D.Component import *
 
 
 def generate_original_signals(pts: int):
@@ -93,7 +93,7 @@ def reconstruct(real, imag):
     return signal
 
 
-if __name__ == "__main__":
+def idft_1d_demo():
     _axis, _signal = generate_original_signals(50)
     _dft = dft_1d(_signal)
 

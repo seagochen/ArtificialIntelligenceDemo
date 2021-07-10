@@ -1,4 +1,4 @@
-from CvTools import DataFile as csv
+from Utilities import DataFile as csv
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -25,7 +25,7 @@ def loss_mesh(x, y, mu, sigma):
     return np.array(Z)
 
 
-if __name__ == "__main__":
+def show_polyhedron():
     x0, y0 = csv.load_pts("Data/csv/gaussian.csv")
     x0 = np.array(x0)
     y0 = np.array(y0)

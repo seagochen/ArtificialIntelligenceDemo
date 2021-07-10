@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from Cv.CvTools.ImagePlot import PltImageCache
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def load_img_grayscale(file: str):
@@ -52,7 +52,7 @@ def gen_spectrum(real_matrix, imag_matrix):
 
 def do_fft():
     # 获取原始图像的灰度图
-    img = load_img_grayscale("Data/Illustrations/1.jpg")
+    img = load_img_grayscale("Data/Illustrations/kana.jpg")
 
     # 获取图像的长宽
     # C++代码里，需要用 img.rows, img.cols来获取对应的数据
@@ -90,11 +90,11 @@ def do_fft():
     shift = shift_spectrum(gamma)
 
     # 把原始图像、FFT频率图、转化后的频率图全部显示出来
-    plt = PltImageCache()
-    plt.add(img, "origin")
-    plt.add(gamma, "dft computed")
-    plt.add(shift, "dft shifted")
-    plt.plots(1, 3)
+    plt = DiagramPlotter()
+    plt.append_image(img, "origin")
+    plt.append_image(gamma, "dft computed")
+    plt.append_image(shift, "dft shifted")
+    plt.show(1, 3)
 
     # 返回复数矩阵供下一步操作
     return fft2
@@ -103,18 +103,18 @@ def do_fft():
 def do_ifft(fft2):
 
     # 获取原始图像的灰度图
-    img = load_img_grayscale("Data/Illustrations/1.jpg")
+    img = load_img_grayscale("Data/Illustrations/kana.jpg")
 
     ifft2 = np.zeros(fft2.shape[:2], np.float32)
     cv2.dft(fft2, ifft2, cv2.DFT_REAL_OUTPUT | cv2.DFT_INVERSE | cv2.DFT_SCALE)
 
     # 把原始图像、FFT频率图、转化后的频率图全部显示出来
-    plt = PltImageCache()
-    plt.add(img, "original")
-    plt.add(ifft2, "idft")
-    plt.plots(1, 2)
+    plt = DiagramPlotter()
+    plt.append_image(img, "original")
+    plt.append_image(ifft2, "idft")
+    plt.show(1, 2)
 
 
-if __name__ == "__main__":
+def dft_2d_demo():
     dft_matrix = do_fft()
     do_ifft(dft_matrix)
