@@ -1,6 +1,7 @@
 from math import cos, sin
-from Mathematics.FFT1D.Component import *
+
 from Mathematics.FFT1D.ComplexNumber import ComplexNumber
+from Mathematics.FFT1D.Component import *
 
 
 def generate_original_signals(pts: int):

@@ -1,5 +1,5 @@
-from Utilities.DiagnoseTool import load_image_gray
 from Utilities.DiagnoseTool import calculate_hist
+from Utilities.DiagnoseTool import load_image_gray
 from Utilities.DiagramPlotter import DiagramPlotter
 
 

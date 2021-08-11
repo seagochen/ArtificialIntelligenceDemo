@@ -1,6 +1,5 @@
-import cv2
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def concatenation_test(img_gray):

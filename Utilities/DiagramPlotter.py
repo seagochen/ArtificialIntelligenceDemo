@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from siki.basics import Exceptions
 import numpy as np
+from siki.basics import Exceptions
 
 
 class ImageDescriptionToken(object):
