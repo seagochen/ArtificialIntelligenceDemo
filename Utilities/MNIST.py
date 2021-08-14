@@ -46,9 +46,10 @@ The sizes in each dimension are 4-byte integers (MSB first, high endian, like in
 The data is stored like in a C array, i.e. the index in the last dimension changes the fastest.
 """
 
-import numpy as np
 import struct
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 # 训练集文件
 train_images_idx3_ubyte_file = './Data/MNIST/train-images-idx3-ubyte'

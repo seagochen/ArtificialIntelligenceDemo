@@ -1,9 +1,10 @@
 import math
-import numpy as np
 import random
-import cv2
 
+import cv2
 import matplotlib.pyplot as plt
+import numpy as np
+
 from Utilities.DiagramPlotter import DiagramPlotter
 
 

@@ -1,6 +1,7 @@
 import numpy as np
-from Utilities.DiagramPlotter import DiagramPlotter as Diagram
+
 from Utilities import DataFile as csv
+from Utilities.DiagramPlotter import DiagramPlotter as Diagram
 
 
 def gaussian_noise_kernel(x, mu, sigma):

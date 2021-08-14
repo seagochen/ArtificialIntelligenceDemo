@@ -1,6 +1,7 @@
 from math import cos, sin
-from Mathematics.FFT1D.Component import *
+
 from Mathematics.FFT1D.ComplexNumber import ComplexNumber
+from Mathematics.FFT1D.Component import *
 
 
 def generate_original_signals(pts: int):
@@ -44,4 +45,3 @@ def dft_1d(signals):
 def dft_1d_demo():
     xs, sigs = generate_original_signals(100)
     dft = dft_1d(sigs)
-    validate_dft(sigs, dft)

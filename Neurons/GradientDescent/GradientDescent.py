@@ -1,5 +1,6 @@
-from Utilities import DataFile as csv
 import numpy as np
+
+from Utilities import DataFile as csv
 
 
 def gaussian_noise_kernel(x, mu, sigma):

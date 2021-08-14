@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-from Utilities.DiagramPlotter import DiagramPlotter
 from FreqFilters import *
+from Utilities.DiagramPlotter import DiagramPlotter
 
 
 def load_img_grayscale(file: str):
