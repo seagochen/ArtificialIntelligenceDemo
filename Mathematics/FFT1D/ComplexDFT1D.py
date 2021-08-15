@@ -45,4 +45,3 @@ def dft_1d(signals):
 def dft_1d_demo():
     xs, sigs = generate_original_signals(100)
     dft = dft_1d(sigs)
-    validate_dft(sigs, dft)
