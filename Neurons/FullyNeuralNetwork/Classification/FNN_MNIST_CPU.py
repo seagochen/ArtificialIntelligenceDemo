@@ -5,50 +5,64 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision import transforms
 
-batch_size = 64
+
+# global definitions
+BATCH_SIZE = 100
+MNIST_PATH = "../../../Data/MNIST"
+
+# transform sequential
 transform = transforms.Compose([
     transforms.ToTensor(),
     #                     mean       std
     transforms.Normalize((0.1307,), (0.3081,))
 ])
 
-train_dataset = datasets.MNIST(root='../dataset/mnist/',
+# training dataset
+train_dataset = datasets.MNIST(root=MNIST_PATH,
                                train=True,
                                download=True,
                                transform=transform)
-
+# training loader
 train_loader = DataLoader(train_dataset,
                           shuffle=True,
-                          batch_size=batch_size)
+                          batch_size=BATCH_SIZE)
 
-test_dataset = datasets.MNIST(root='../dataset/mnist/',
+# test dataset
+test_dataset = datasets.MNIST(root=MNIST_PATH,
                               train=False,
                               download=True,
                               transform=transform)
-
-test_loader = DataLoader(train_dataset,
+# test loader
+test_loader = DataLoader(test_dataset,
                          shuffle=False,
-                         batch_size=batch_size)
+                         batch_size=BATCH_SIZE)
 
 
-class FullNeuralNetwork(torch.nn.Module):
+class FullyNeuralNetwork(torch.nn.Module):
 
     def __init__(self):
         super().__init__()
-        self.layer_1 = torch.nn.Linear(784, 512)
+
+        # layer definitions
+        self.layer_1 = torch.nn.Linear(784, 512)   # 28 x 28 = 784 pixels as input
         self.layer_2 = torch.nn.Linear(512, 256)
         self.layer_3 = torch.nn.Linear(256, 128)
         self.layer_4 = torch.nn.Linear(128, 64)
         self.layer_5 = torch.nn.Linear(64, 10)
 
-    def forward(self, input_image):
-        # each image with 28 x 28 pixels
-        x = input_image.view(-1, 784)
+    def forward(self, data):
+        # transform the image view
+        x = data.view(-1, 784)
+
+        # do forward calculation
         x = functional.relu(self.layer_1(x))
         x = functional.relu(self.layer_2(x))
         x = functional.relu(self.layer_3(x))
         x = functional.relu(self.layer_4(x))
-        return self.layer_5(x)
+        x = self.layer_5(x)
+
+        # return results
+        return x
 
 
 def train(epoch, model, criterion, optimizer):
@@ -63,8 +77,9 @@ def train(epoch, model, criterion, optimizer):
         loss.backward()
         optimizer.step()
 
+        # print loss
         running_loss += loss.item()
-        if batch_idx % 300 == 0:
+        if batch_idx % 100 == 0:
             print('[%d, %5d] loss: %.3f' % (epoch, batch_idx, running_loss / 300))
             running_loss = 0.0
 
@@ -73,8 +88,7 @@ def test(model):
     correct = 0
     total = 0
     with torch.no_grad():
-        for data in test_loader:
-            images, labels = data
+        for images, labels in test_loader:
             outputs = model(images)
             _, predicated = torch.max(outputs.data, dim=1)
             total += labels.size(0)
@@ -86,7 +100,7 @@ def test(model):
 if __name__ == "__main__":
 
     # full neural network model
-    model = FullNeuralNetwork()
+    model = FullyNeuralNetwork()
 
     # LOSS function
     criterion = torch.nn.CrossEntropyLoss()
@@ -96,7 +110,7 @@ if __name__ == "__main__":
     optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.5)
 
     # training and do gradient descent calculation
-    for epoch in range(10):
+    for epoch in range(5):
         # training data
         train(epoch, model, criterion, optimizer)
 

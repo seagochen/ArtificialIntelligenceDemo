@@ -2,6 +2,4 @@ siki
 pandas
 opencv-python
 sklearn
-torch
-torchvision
 numpy

@@ -7,7 +7,7 @@ from torchvision import transforms
 
 
 # global definitions
-BATCH_SIZE = 64
+BATCH_SIZE = 100
 MNIST_PATH = "../../../Data/MNIST"
 
 # transform sequential
@@ -68,7 +68,13 @@ class FullyNeuralNetwork(torch.nn.Module):
 def train(epoch, model, criterion, optimizer):
     running_loss = 0.0
     for batch_idx, data in enumerate(train_loader, 0):
+
+        # convert data to GPU
         inputs, target = data
+        inputs = inputs.cuda()
+        target = target.cuda()
+
+        # clear gradients
         optimizer.zero_grad()
 
         # forward, backward, update
@@ -77,8 +83,9 @@ def train(epoch, model, criterion, optimizer):
         loss.backward()
         optimizer.step()
 
-        running_loss += loss.item()
-        if batch_idx % 300 == 0:
+        # print loss
+        running_loss += loss.cpu().item()
+        if batch_idx % 100 == 0:
             print('[%d, %5d] loss: %.3f' % (epoch, batch_idx, running_loss / 300))
             running_loss = 0.0
 
@@ -86,11 +93,20 @@ def train(epoch, model, criterion, optimizer):
 def test(model):
     correct = 0
     total = 0
+
     with torch.no_grad():
+
         for images, labels in test_loader:
+            # convert data to gpu
+            images = images.cuda()
+
+            # test
             outputs = model(images)
             _, predicated = torch.max(outputs.data, dim=1)
+
+            # count the accuracy
             total += labels.size(0)
+            predicated = predicated.cpu()
             correct += (predicated == labels).sum().item()
 
     print("Accuracy on test set: %d %%" % (100 * correct / total))
@@ -99,19 +115,20 @@ def test(model):
 if __name__ == "__main__":
 
     # full neural network model
-    model = FullyNeuralNetwork()
+    cpu_model = FullyNeuralNetwork()
+    gpu_model = cpu_model.cuda()
 
     # LOSS function
     criterion = torch.nn.CrossEntropyLoss()
 
     # parameters optimizer
     # stochastic gradient descent
-    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.5)
+    optimizer = optim.SGD(gpu_model.parameters(), lr=0.1, momentum=0.5)
 
     # training and do gradient descent calculation
     for epoch in range(5):
         # training data
-        train(epoch, model, criterion, optimizer)
+        train(epoch, gpu_model, criterion, optimizer)
 
         # test model
-        test(model)
+        test(gpu_model)
