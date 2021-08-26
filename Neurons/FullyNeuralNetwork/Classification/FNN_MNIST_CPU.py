@@ -7,7 +7,7 @@ from torchvision import transforms
 
 
 # global definitions
-BATCH_SIZE = 100
+BATCH_SIZE = 64
 MNIST_PATH = "../../../Data/MNIST"
 
 # transform sequential
@@ -79,7 +79,7 @@ def train(epoch, model, criterion, optimizer):
 
         # print loss
         running_loss += loss.item()
-        if batch_idx % 100 == 0:
+        if batch_idx % 300 == 0:
             print('[%d, %5d] loss: %.3f' % (epoch, batch_idx, running_loss / 300))
             running_loss = 0.0
 
