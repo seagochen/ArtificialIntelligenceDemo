@@ -3,3 +3,5 @@ pandas
 opencv-python
 sklearn
 numpy
+torch
+torchvision
