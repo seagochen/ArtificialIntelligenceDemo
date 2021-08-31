@@ -33,7 +33,7 @@ n_hidden = 128
 
 # rnn = RNN(Da.n_letters, n_hidden, DataLoader.n_categories)
 
-input_data = transform.letter_to_tensor('A')
+input_data = transform._letter_to_tensor('A')
 hidden = torch.zeros(1, n_hidden)
 
 # output, next_hidden = rnn(input_data, hidden)

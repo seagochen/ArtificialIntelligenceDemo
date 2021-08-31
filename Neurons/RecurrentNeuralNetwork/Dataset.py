@@ -15,12 +15,6 @@ names_dictionary = {}
 # Language species list
 language_list = []
 
-# train dataset
-train_dataset = {}
-
-# test dataset
-test_dataset = {}
-
 
 def find_files(path): return glob.glob(path)
 
@@ -48,16 +42,45 @@ def _load_data(path):
         names_dictionary[category] = lines
 
 
-def _cherry_pick_items():
+def datasets(root: str):
+    # if the data not loaded, reload the data
+    if len(names_dictionary) == 0 or len(language_list) == 0:
+        _load_data(root)
+
+    return language_list, names_dictionary
+
+
+# max length
+def max_length(name_dictionary: dict):
+    max_len = 0
+
+    for lang, surnames in name_dictionary.items():
+        if max_len < len(lang):
+            max_len = len(lang)
+
+        for name in surnames:
+            if max_len < len(name):
+                max_len = len(name)
+
+    return max_len
+
+
+def cherry_pick_items(name_dataset=None):
+    if name_dataset is None:
+        name_dataset = names_dictionary
+
+    train_dataset = {}
+    test_dataset = {}
+
     # iteratively scanning each surnames from different languages
     for lang in language_list:
-        surnames = names_dictionary[lang]
+        surnames = name_dataset[lang]
         train_dataset_temp = []
         test_dataset_temp = []
 
         # cherry pick item from dataset, separately
         for name in surnames:
-            if random.random() < 0.8:
+            if random.random() < 0.75:
                 train_dataset_temp.append(name)
             else:
                 test_dataset_temp.append(name)
@@ -66,24 +89,23 @@ def _cherry_pick_items():
         train_dataset[lang] = train_dataset_temp
         test_dataset[lang] = test_dataset_temp
 
-
-def names(root: str, train: bool):
-    # if the data not loaded, reload the data
-    if len(names_dictionary) == 0 or len(language_list) == 0:
-        _load_data(root)
-
-    if len(train_dataset) == 0 or len(test_dataset) == 0:
-        _cherry_pick_items()
-
-    if train:
-        return train_dataset
-    else:
-        return test_dataset
+    return train_dataset, test_dataset
 
 
 if __name__ == "__main__":
-    test = names("../../Data/NAMES/raw/*.txt", False)
-    train = names("../../Data/NAMES/raw/*.txt", True)
+    _list, _data = datasets("../../Data/NAMES/raw/*.txt")
+    print(_list)
+    print('max len:', max_length(_data))
 
-    print(len(test['Chinese']))
-    print(len(train['Chinese']))
+    _train, _test = cherry_pick_items()
+    for lan in _list:
+        train_size = len(_train[lan])
+        test_size = len(_test[lan])
+        all_size = len(_data[lan])
+
+        header = "{} ({})".format(lan, all_size)
+        train_per = "{} ({:.2%})".format(train_size, train_size / all_size)
+        test_per = "{} ({:.2%})".format(test_size, test_size / all_size)
+
+        result_str = "{0:20} train: {1:15} test: {2:15}".format(header, train_per, test_per)
+        print(result_str)
