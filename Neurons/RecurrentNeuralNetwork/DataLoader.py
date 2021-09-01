@@ -1,3 +1,4 @@
+import torch
 from torch.utils.data import Dataset
 
 from Neurons.RecurrentNeuralNetwork.Dataset import datasets, cherry_pick_items, max_length
@@ -5,7 +6,7 @@ from Neurons.RecurrentNeuralNetwork.Transform import transform
 
 
 class NamesDataset(Dataset):
-    
+
     def __init__(self, dict_data: dict, max_len=0):
         super(NamesDataset, self).__init__()
 
@@ -37,6 +38,14 @@ def load_datasets(path):
     return train_data, test_data
 
 
+# def convert_dims_to_lnh(dataset):
+#     batch_size = dataset.size()[0]
+#     sequential = dataset.size()[1]
+#     features = dataset.size()[2]
+#
+#     tensor_data = torch.Tensor(sequential, batch_size, features)
+
+
 if __name__ == "__main__":
     from torch.utils.data import DataLoader
 
@@ -48,7 +57,5 @@ if __name__ == "__main__":
     for i_batch, batch_data in enumerate(_test_loader):
         x, y = batch_data
 
-        result_str = "batch {0:2} \ttrain: {1:25} \ttest: {2:25}".format(i_batch, str(x.size()), str(y.size()))
+        result_str = "batch {0:2} \ttrain: {1:25} \ttest: {2:25}".format(i_batch, str(x.shape), str(y.shape))
         print(result_str)
-
-
