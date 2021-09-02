@@ -97,7 +97,7 @@ if __name__ == "__main__":
     model = RNN(n_letters, n_letters)
 
     # LOSS function
-    criterion = torch.nn.NLLLoss()
+    criterion = torch.nn.CrossEntropyLoss()
 
     # parameters optimizer
     # stochastic gradient descent

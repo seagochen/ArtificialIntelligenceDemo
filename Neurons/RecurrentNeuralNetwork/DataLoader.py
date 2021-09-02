@@ -1,14 +1,13 @@
+import random
+import math
 import torch
-from torch.utils.data import Dataset
-
 from Neurons.RecurrentNeuralNetwork.Dataset import datasets, cherry_pick_items, max_length
 from Neurons.RecurrentNeuralNetwork.Transform import transform
 
 
-class NamesDataset(Dataset):
+class DataLoader(object):
 
     def __init__(self, dict_data: dict, max_len=0):
-        super(NamesDataset, self).__init__()
 
         self.x_data = []
         self.y_data = []
@@ -19,11 +18,31 @@ class NamesDataset(Dataset):
                 self.x_data.append(x_ts)
                 self.y_data.append(y_ts)
 
-    def __getitem__(self, index):
-        return self.x_data[index], self.y_data[index]
-
     def __len__(self):
-        return len(self.x_data)
+        return len(self.y_data)
+
+    def load_item(self, batch_size=1, shuffle=False):
+        output_x = []
+        output_y = []
+
+        while self.__len__() > 0 and batch_size > 0:
+            if shuffle:
+                key = math.ceil(random.random() * self.__len__())
+                key = int(key)
+
+                pop_y = self.y_data.pop(key)
+                pop_x = self.x_data.pop(key)
+            else:
+                pop_y = self.y_data.pop()
+                pop_x = self.x_data.pop()
+
+            batch_size -= 1
+
+            # append data to list
+            output_x.append(pop_x)
+            output_y.append(pop_y)
+
+        return output_x, output_y
 
 
 def load_datasets(path):
@@ -32,30 +51,24 @@ def load_datasets(path):
     train_data, test_data = cherry_pick_items(surnames)
     max_len = max_length(surnames)
 
-    train_data = NamesDataset(train_data, max_len)
-    test_data = NamesDataset(test_data, max_len)
+    train_loader = DataLoader(train_data, max_len)
+    test_loader = DataLoader(test_data, max_len)
 
-    return train_data, test_data
+    return train_loader, test_loader
 
 
-# def convert_dims_to_lnh(dataset):
-#     batch_size = dataset.size()[0]
-#     sequential = dataset.size()[1]
-#     features = dataset.size()[2]
-#
-#     tensor_data = torch.Tensor(sequential, batch_size, features)
+def concatenate_tensors(tensor_list):
+    output = torch.cat(tensor_list, dim=1)
+    return output
+
+
+def test():
+    train, test = load_datasets("../../Data/NAMES/raw/*.txt")
+
+    while len(train):
+        x, y = train.load_item(batch_size=64)
+        print(concatenate_tensors(x).shape == concatenate_tensors(y).shape)
 
 
 if __name__ == "__main__":
-    from torch.utils.data import DataLoader
-
-    _train, _test = load_datasets("../../Data/NAMES/raw/*.txt")
-
-    _test_loader = DataLoader(_test, batch_size=64, shuffle=True)
-
-    # test results
-    for i_batch, batch_data in enumerate(_test_loader):
-        x, y = batch_data
-
-        result_str = "batch {0:2} \ttrain: {1:25} \ttest: {2:25}".format(i_batch, str(x.shape), str(y.shape))
-        print(result_str)
+    test()
