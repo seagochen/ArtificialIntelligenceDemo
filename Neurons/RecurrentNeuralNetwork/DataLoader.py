@@ -1,9 +1,6 @@
-import random
-import math
-import torch
 from torch.utils.data import Dataset, DataLoader
-from Neurons.RecurrentNeuralNetwork.Dataset import load_datasets, cherry_pick_items, max_length
-from Neurons.RecurrentNeuralNetwork.Transform import line_to_index, line_to_ascii_tensor
+
+from Neurons.RecurrentNeuralNetwork.Dataset import load_datasets, cherry_pick_items
 
 
 class MyNameDataset(Dataset):
