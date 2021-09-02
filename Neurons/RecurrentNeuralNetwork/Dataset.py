@@ -42,7 +42,7 @@ def _load_data(path):
         names_dictionary[category] = lines
 
 
-def datasets(root: str):
+def load_datasets(root: str):
     # if the data not loaded, reload the data
     if len(names_dictionary) == 0 or len(language_list) == 0:
         _load_data(root)
@@ -92,16 +92,16 @@ def cherry_pick_items(name_dataset=None):
     return train_dataset, test_dataset
 
 
-if __name__ == "__main__":
-    _list, _data = datasets("../../Data/NAMES/raw/*.txt")
-    print(_list)
-    print('max len:', max_length(_data))
+def test():
+    lang_list, surnames = load_datasets("../../Data/NAMES/raw/*.txt")
+    print(lang_list)
+    print('max len:', max_length(surnames))
 
-    _train, _test = cherry_pick_items()
-    for lan in _list:
-        train_size = len(_train[lan])
-        test_size = len(_test[lan])
-        all_size = len(_data[lan])
+    train_sets, test_sets = cherry_pick_items()
+    for lan in lang_list:
+        train_size = len(train_sets[lan])
+        test_size = len(test_sets[lan])
+        all_size = len(surnames[lan])
 
         header = "{} ({})".format(lan, all_size)
         train_per = "{} ({:.2%})".format(train_size, train_size / all_size)
@@ -109,3 +109,7 @@ if __name__ == "__main__":
 
         result_str = "{0:20} train: {1:15} test: {2:15}".format(header, train_per, test_per)
         print(result_str)
+
+
+if __name__ == "__main__":
+    test()
