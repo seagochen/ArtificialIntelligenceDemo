@@ -2,11 +2,11 @@ import torch
 
 from torch.utils.data import DataLoader
 
-from Neurons.RecurrentNeuralNetwork.Dataset import load_datasets, cherry_pick_items
-from Neurons.RecurrentNeuralNetwork.DataLoader import MyNameDataset
-from Neurons.RecurrentNeuralNetwork.Utils import to_ascii_based_tensors, to_one_hot_based_tensor
-from Neurons.RecurrentNeuralNetwork.Utils import to_simple_tensor
-from Neurons.RecurrentNeuralNetwork.RNNLowModel import RNNModel
+from Neurons.Utils.Dataset import load_datasets, cherry_pick_items
+from Neurons.Utils.DataLoader import MyNameDataset
+from Neurons.Utils.Convert import to_ascii_based_tensors
+from Neurons.Utils.Convert import to_simple_tensor
+from Neurons.RNNLow.Model import RNNModel
 
 # global definitions
 INPUT_SIZE = 1

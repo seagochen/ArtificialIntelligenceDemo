@@ -1,6 +1,6 @@
 import torch
 
-from Neurons.RecurrentNeuralNetwork.Dataset import all_letters
+from Neurons.Utils.Dataset import all_letters
 
 
 # Find letter index from all_letters, e.g. "a" = 0
@@ -47,15 +47,19 @@ def test():
     ascii_based = line_to_ascii_tensor("James", 10)
     one_hot = line_to_one_hot_tensor("James", 7)
 
+    # print(ascii_based)
+    # print(ascii_based.shape)
+    print(one_hot)
+    print(one_hot.shape)
+
     print(ascii_based)
     print(ascii_based.shape)
-    print(one_hot.shape)
 
     # indx = line_to_index("Japan", ["UK", "USA", "Roma", "Japan"])
     # print(indx)
 
-    one_hot = one_hot.reshape(7, 1, -1)
-    print(one_hot.shape)
+    # one_hot = one_hot.reshape(7, 1, -1)
+    # print(one_hot.shape)
 
 
 if __name__ == "__main__":

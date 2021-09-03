@@ -1,7 +1,7 @@
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
-from Neurons.RecurrentNeuralNetwork.Transform import line_to_ascii_tensor, line_to_one_hot_tensor, line_to_index
+from Neurons.Utils.Transform import line_to_ascii_tensor, line_to_one_hot_tensor, line_to_index
 
 
 def concatenate_tensors(tensor_list):
@@ -12,11 +12,11 @@ def to_ascii_based_tensors(surnames, padding=20):
     tensors = []
     for name in surnames:
         tensor = line_to_ascii_tensor(name, padding)
-        tensor = tensor.reshape(padding, 1)
+        # tensor = tensor.reshape(padding, 1)
         tensors.append(tensor)
 
-    return concatenate_tensors(tensors)
-    # return tensors
+    # return concatenate_tensors(tensors)
+    return tensors
 
 
 def to_one_hot_based_tensor(surnames, padding=20):
@@ -25,8 +25,9 @@ def to_one_hot_based_tensor(surnames, padding=20):
         tensor = line_to_one_hot_tensor(name, padding)
         tensors.append(tensor)
 
-    return concatenate_tensors(tensors)
-    # return tensors
+    # return concatenate_tensors(tensors)
+    return tensors
+
 
 def to_simple_tensor(languages, dim=0):
     indices = []
@@ -35,3 +36,14 @@ def to_simple_tensor(languages, dim=0):
         indices.append(index)
 
     return torch.tensor(indices)
+
+
+if __name__ == "__main__":
+    tensor1 = to_ascii_based_tensors("First")
+    tensor2 = to_one_hot_based_tensor("abcd")
+
+    for ts in tensor1:
+        print(ts.shape, '\n', ts)
+
+    for ts in tensor2:
+        print(ts.shape, '\n', ts)
