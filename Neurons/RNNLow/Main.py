@@ -6,7 +6,7 @@ from Neurons.Utils.Dataset import load_datasets, cherry_pick_items
 from Neurons.Utils.DataLoader import MyNameDataset
 from Neurons.Utils.Convert import to_ascii_based_tensors
 from Neurons.Utils.Convert import to_simple_tensor
-from Neurons.RNNLow.Model import RNNModel
+from Neurons.RNNLow.Model import RNN
 
 # global definitions
 INPUT_SIZE = 1
@@ -76,7 +76,7 @@ def test_model(test_loader, model):
 if __name__ == "__main__":
 
     # declare a rnn model
-    model = RNNModel(INPUT_SIZE, HIDDEN_SIZE)
+    model = RNN(INPUT_SIZE, HIDDEN_SIZE)
 
     # run training cycle
     for i in range(1, 10 + 1):

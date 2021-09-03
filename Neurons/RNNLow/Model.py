@@ -1,7 +1,7 @@
 import torch
 
 
-class RNNModel(torch.nn.Module):
+class RNN(torch.nn.Module):
 
     def __init__(self, input_size, hidden_size, num_layers=1):
         """
@@ -11,7 +11,7 @@ class RNNModel(torch.nn.Module):
         hidden of shape (batch, hidden_size)
         output of shape (batch, hidden_size)
         """
-        super(RNNModel, self).__init__()
+        super(RNN, self).__init__()
 
         # record some parameters
         self.num_layers = num_layers
