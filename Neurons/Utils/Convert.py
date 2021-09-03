@@ -8,28 +8,28 @@ def concatenate_tensors(tensor_list):
     return pad_sequence(tensor_list)
 
 
-def to_ascii_based_tensors(surnames, padding=20):
+def to_ascii_based_tensors(surnames: list, padding=20):
     tensors = []
     for name in surnames:
         tensor = line_to_ascii_tensor(name, padding)
-        # tensor = tensor.reshape(padding, 1)
+        tensor = tensor.reshape(padding, 1)
         tensors.append(tensor)
 
-    # return concatenate_tensors(tensors)
-    return tensors
+    return concatenate_tensors(tensors)
+    # return tensors
 
 
-def to_one_hot_based_tensor(surnames, padding=20):
+def to_one_hot_based_tensor(surnames: list, padding=20):
     tensors = []
     for name in surnames:
         tensor = line_to_one_hot_tensor(name, padding)
         tensors.append(tensor)
 
-    # return concatenate_tensors(tensors)
-    return tensors
+    return concatenate_tensors(tensors)
+    # return tensors
 
 
-def to_simple_tensor(languages, dim=0):
+def to_simple_tensor(languages):
     indices = []
     for lang in languages:
         index = line_to_index(lang, languages)
@@ -38,12 +38,23 @@ def to_simple_tensor(languages, dim=0):
     return torch.tensor(indices)
 
 
+def test():
+    tensor1 = to_ascii_based_tensors(['aa', 'bb', 'cc'], 2)
+    tensor2 = to_one_hot_based_tensor(['aa', 'bb', 'cc'], 2)
+
+    print(tensor1.shape)
+    print(tensor2.shape)
+
+    sequence, batch, letters = tensor1.size()
+    for i in range(batch):
+        ts = tensor1[:, i, :]
+        print(ts)
+
+    sequence, batch, letters = tensor2.size()
+    for i in range(batch):
+        ts = tensor2[:, i, :]
+        print(ts)
+
+
 if __name__ == "__main__":
-    tensor1 = to_ascii_based_tensors("First")
-    tensor2 = to_one_hot_based_tensor("abcd")
-
-    for ts in tensor1:
-        print(ts.shape, '\n', ts)
-
-    for ts in tensor2:
-        print(ts.shape, '\n', ts)
+    test()
