@@ -5,8 +5,8 @@ import torch
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
-from Neurons.RNNLinearImp.Model import RNN, category_from_output
-from Neurons.RNNLinearImp.RandomChoiceTest import random_training_example
+from Neurons.RNNLinear.Model import RNN, category_from_output
+from Neurons.RNNLinear.RandomChoiceTest import random_training_example
 from Neurons.Utils.DataLoader import MyNameDataset
 from Neurons.Utils.Dataset import load_datasets, cherry_pick_items
 
