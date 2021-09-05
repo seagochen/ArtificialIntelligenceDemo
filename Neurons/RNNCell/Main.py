@@ -1,48 +1,49 @@
-import math
-import time
-
 import torch
-from torch.utils.data import DataLoader
-import matplotlib.pyplot as plt
 
 from Neurons.RNNCell.Model import RNNCellModel
-from Neurons.Utils.DataLoader import MyNameDataset
-from Neurons.Utils.Dataset import load_datasets, cherry_pick_items
 
-# global definitions
-INPUT_SIZE = 57  # one-hot-vector contains 57 separately 0-1 numerics to represent a letter
-HIDDEN_SIZE = 18  # hidden features, defined by user, not mandatory
-BATCH_SIZE = 10  # the count of words in the same time of training and test cycle
-SEQUENCE_SIZE = 20  # letters in a word with padding length
+BATCH_SIZE = 1
+INPUT_SIZE = 4
+HIDDEN_SIZE = 4
 
-# load data and do some preprocessing
-lang_list, surnames = load_datasets("../../Data/NAMES/raw/*.txt")
-train_loader, test_loader = cherry_pick_items(surnames)
-train_loader = DataLoader(MyNameDataset(train_loader), shuffle=True, batch_size=BATCH_SIZE)
-test_loader = DataLoader(MyNameDataset(test_loader), shuffle=True, batch_size=BATCH_SIZE)
+# Hello -> ehool
+
+idx2char = ['e', 'h', 'l', 'o']
+x_data = [1, 0, 2, 2, 3]
+y_data = [0, 1, 3, 3, 2]
 
 
-def train(epoch, model, criterion, optimizer):
-    pass
+one_hot = [[1, 0, 0, 0],
+           [0, 1, 0, 0],
+           [0, 0, 1, 0],
+           [0, 0, 0, 1]]
 
+x_one_hot = [one_hot[x] for x in x_data]
 
-def test(model):
-    pass
+inputs = torch.Tensor(x_one_hot).view(-1, BATCH_SIZE, INPUT_SIZE)
+labels = torch.LongTensor(y_data).view(-1, 1)
 
+model = RNNCellModel(INPUT_SIZE, HIDDEN_SIZE)
 
-if __name__ == "__main__":
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.1)
 
-    # define a net and do some simple test
-    model = RNNCellModel(INPUT_SIZE, HIDDEN_SIZE, BATCH_SIZE)
+for epoch in range(15):
+    loss = 0
 
-    # loss function and optimizer
-    criterion = torch.nn.NLLLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.05)
+    optimizer.zero_grad()
+    hidden = model.init_hidden()
+    print("Predicated String ", end='')
 
-    # training and do gradient descent calculation
-    for epoch in range(5):
-        # training data
-        train(epoch, model, criterion, optimizer)
+    for input, label in zip(inputs, labels):
+        hidden, _ = model(input, hidden)
+        loss += criterion(hidden, label)
 
-        # test model
-        test(model)
+        _, idx = hidden.max(dim=1)
+        print(idx2char[idx.item()], end='')
+
+    loss.backward()
+    optimizer.step()
+
+    print("，Epoch [%d/15] loss=%.4f" % (epoch + 1, loss.item()))
+

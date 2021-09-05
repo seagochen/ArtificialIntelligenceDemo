@@ -1,7 +1,7 @@
 import torch
 
 
-class RNN(torch.nn.Module):
+class RNNLinearImpModel(torch.nn.Module):
 
     """
     $h_t = tanh(W_{ih}x_t + b_{ih} + W_{hh}h_{(t-1)} + b_{hh})$
@@ -12,7 +12,7 @@ class RNN(torch.nn.Module):
     """
 
     def __init__(self, input_size, hidden_size, output_size):
-        super(RNN, self).__init__()
+        super(RNNLinearImpModel, self).__init__()
 
         self.hidden_size = hidden_size
 
@@ -32,8 +32,8 @@ class RNN(torch.nn.Module):
         output = self.softmax(output)
         return output, h0
 
-    def init_hidden(self):
-        return torch.zeros(1, self.hidden_size)
+    def init_hidden(self, batch_size=1):
+        return torch.zeros(batch_size, self.hidden_size)
 
 
 def category_from_output(output: torch.Tensor):
@@ -61,7 +61,7 @@ def test():
     words_in_one_hot = to_one_hot_based_tensor(["James"], sequence_size)
 
     # define a net and do some simple test
-    net = RNN(input_size, hidden_size, output_size)
+    net = RNNLinearImpModel(input_size, hidden_size, output_size)
 
     # do recurrent computation
     hidden = net.init_hidden()

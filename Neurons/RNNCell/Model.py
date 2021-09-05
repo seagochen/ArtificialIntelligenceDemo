@@ -10,15 +10,17 @@ class RNNCellModel(torch.nn.Module):
     nonlinearity – The non-linearity to use. Can be either 'tanh' or 'relu'. Default: 'tanh'
     """
 
-    def __init__(self, input_size, hidden_size, batch_size):
+    def __init__(self, input_size, hidden_size):
         super().__init__()
 
-        self.batch_size = batch_size
         self.input_size = input_size
         self.hidden_size = hidden_size
+        # self.output_size = output_size
 
         self.cell = torch.nn.RNNCell(input_size=self.input_size,
                                      hidden_size=self.hidden_size)
+        # self.linear = torch.nn.Linear(hidden_size, output_size)
+        # self.softmax = torch.nn.LogSoftmax(dim=1)
 
     def forward(self, data, hidden=None):
         """
@@ -31,10 +33,12 @@ class RNNCellModel(torch.nn.Module):
 
         """
         hidden = self.cell(data, hidden)
-        return hidden
+        return hidden, hidden
+        # output = self.softmax(self.linear(hidden))
+        # return output, hidden
 
-    def init_hidden(self):
-        return torch.zeros(self.batch_size, self.hidden_size)
+    def init_hidden(self, batch_size=1):
+        return torch.zeros(batch_size, self.hidden_size)
 
 
 def test():
@@ -51,12 +55,12 @@ def test():
     words_in_one_hot = to_one_hot_based_tensor(["James"], sequence_size)
 
     # define a net and do some simple test
-    net = RNNCellModel(input_size, output_size, 1)
+    net = RNNCellModel(input_size, output_size)
 
     # do recurrent computation
     hidden = net.init_hidden()
     for i in range(sequence_size):
-        hidden = net(words_in_one_hot[i], hidden)
+        _, hidden = net(words_in_one_hot[i], hidden)
         print("{:.4f}".format(top_item(hidden)),  category_from_output(hidden))
 
     print("done")

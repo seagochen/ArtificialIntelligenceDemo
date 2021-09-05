@@ -77,13 +77,11 @@ def train(category_tensor, line_tensor, rnn, criterion):
 
     rnn.zero_grad()
     output = None
-    loss = 0
 
     for i in range(line_tensor.size()[0]):
         output, hidden = rnn(line_tensor[i], hidden)
 
     loss = criterion(output, category_tensor)
-
     loss.backward()
     learning_rate = 0.005
 
@@ -134,5 +132,40 @@ def rnn_demo():
     return model
 
 
+def rnn_predict(model, surname):
+    # convert the name to one-hot vector
+    inputs = to_one_hot_based_tensor([surname], SEQUENCE_SIZE)
+
+    # generate predicated values
+    batch_size = inputs.size()[1]
+    hidden = model.init_hidden(batch_size)
+
+    # send letter one by one to the model
+    output = None
+    for i in range(inputs.size()[0]):
+        # forward computation
+        output, hidden = model(inputs[i], hidden)
+
+    return output
+
+
+def input_test(model):
+
+    while True:
+        # get user input
+        surname = input("Enter a surname:")
+
+        # if surname is e, stop the program
+        if surname == "e":
+            break
+
+        # convert the surname to one-hot vector
+        result = rnn_predict(model, surname)
+
+        # show predicated value
+        lang, _ = category_from_output(result)
+        print("Is {} a {} name?".format(surname, lang))
+
+
 if __name__ == "__main__":
-    rnn_demo()
+    input_test(rnn_demo())

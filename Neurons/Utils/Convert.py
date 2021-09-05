@@ -29,15 +29,6 @@ def to_one_hot_based_tensor(surnames: list, padding=20):
     # return tensors
 
 
-def to_simple_tensor(languages):
-    indices = []
-    for lang in languages:
-        index = line_to_index(lang, languages)
-        indices.append(index)
-
-    return torch.tensor(indices)
-
-
 def test():
     tensor1 = to_ascii_based_tensors(['aa', 'bb', 'cc'], 2)
     tensor2 = to_one_hot_based_tensor(['aa', 'bb', 'cc'], 2)

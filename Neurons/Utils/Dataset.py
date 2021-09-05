@@ -80,7 +80,7 @@ def cherry_pick_items(name_dataset=None):
 
         # cherry pick item from dataset, separately
         for name in surnames:
-            if random.random() < 0.75:
+            if random.random() < 0.6:
                 train_dataset_temp.append(name)
             else:
                 test_dataset_temp.append(name)

@@ -55,8 +55,8 @@ def test():
     print(ascii_based)
     print(ascii_based.shape)
 
-    # indx = line_to_index("Japan", ["UK", "USA", "Roma", "Japan"])
-    # print(indx)
+    indx = line_to_index("Japan", ["UK", "USA", "Roma", "Japan"])
+    print(indx)
 
     # one_hot = one_hot.reshape(7, 1, -1)
     # print(one_hot.shape)
