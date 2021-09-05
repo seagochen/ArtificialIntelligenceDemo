@@ -8,7 +8,7 @@ BATCH_SIZE = 1
 INPUT_SIZE = n_letters
 HIDDEN_SIZE = n_letters
 
-DATA = "aiueoa"
+DATA = "hellolele"
 
 inputs = line_to_one_hot_tensor(DATA)
 labels = line_to_chaos_tensor(DATA)

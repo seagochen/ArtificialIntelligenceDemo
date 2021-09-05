@@ -2,7 +2,7 @@ import torch
 
 # ASCII codes
 # all_letters = string.ascii_letters + " .,;'"
-all_letters = "aiueo"
+all_letters = "helo"
 n_letters = len(all_letters)
 
 
@@ -47,20 +47,17 @@ def line_to_chaos_tensor(line: str, padding=0):
         tensor = torch.zeros(1, padding, dtype=torch.long)
 
     for idx, char in enumerate(line):
-        if char == 'a':
-            tensor[0][idx] = _letter_to_index('i')
-            continue
-        if char == 'i':
-            tensor[0][idx] = _letter_to_index('u')
-            continue
-        if char == 'u':
-            tensor[0][idx] = _letter_to_index('a')
+        if char == 'h':
+            tensor[0][idx] = _letter_to_index('h')
             continue
         if char == 'e':
             tensor[0][idx] = _letter_to_index('o')
             continue
+        if char == 'l':
+            tensor[0][idx] = _letter_to_index('l')
+            continue
         if char == 'o':
-            tensor[0][idx] = _letter_to_index('e')
+            tensor[0][idx] = _letter_to_index('o')
             continue
 
     return tensor.view(-1, 1)
