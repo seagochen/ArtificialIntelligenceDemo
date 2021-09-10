@@ -8,7 +8,6 @@ from Neurons.RecurrentNeuralNetwork.Utils.Dataset import load_datasets, cherry_p
 from Neurons.RecurrentNeuralNetwork.Utils.DataLoader import MyNameDataset
 from Neurons.RecurrentNeuralNetwork.Utils.Convert import to_simple_tensor, to_one_hot_based_tensor
 
-
 # 57 个独热向量
 INPUT_SIZE = len(all_letters)
 
@@ -56,11 +55,11 @@ def convert_data(data):
     # convert regions to integer list
     label_y = to_simple_tensor(regions)
 
-    return input_x, label_y
+    # return cuda version to caller
+    return input_x.cuda(), label_y.cuda()
 
 
 def train(epoch, model, optimizer, criterion):
-
     running_loss = 0
 
     for idx, data in enumerate(train_loader, 0):
@@ -84,7 +83,7 @@ def train(epoch, model, optimizer, criterion):
         optimizer.step()
 
         # print loss
-        running_loss += loss.item()
+        running_loss += loss.cpu().item()
         if idx % 100 == 0:
             print('[%d, %5d] loss: %.3f' % (epoch, idx, running_loss / 100))
             running_loss = 0
@@ -95,7 +94,6 @@ def test(model):
     total = 0
 
     with torch.no_grad():
-
         for idx, data in enumerate(test_loader, 0):
             # convert data
             input_x, label_y = convert_data(data)
@@ -105,11 +103,10 @@ def test(model):
 
             # check output
             _, predicated = torch.max(predicate_y.data, dim=1)
-            total += label_y.size(0)
-            correct += (predicated == label_y).sum().item()
+            total += label_y.cpu().size(0)
+            correct += (predicated == label_y).sum().cpu().item()
 
     print("Accuracy on test set: %d %%" % (100 * correct / total))
-
 
 
 if __name__ == "__main__":
@@ -122,20 +119,26 @@ if __name__ == "__main__":
         sequence_size=SEQUENCE_SIZE,
         batch_size=BATCH_SIZE)
 
+    # convert to cuda model
+    model = model.cuda()
+
     # loss function
     criterion = torch.nn.CrossEntropyLoss()
 
     # majorized function
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    # load dataset
-    languages, language_idx, train_loader, test_loader = load_dataset()
-
     # Training and testing process
     for epoch in range(10):
+
+        # load dataset
+        languages, language_idx, train_loader, test_loader = load_dataset()
 
         # training
         train(epoch, model, optimizer, criterion)
 
         # testing
         test(model)
+
+    # finally save the model
+    torch.save(model, "LSTM_Surname_Classfication_CUDA_98per.ptm")

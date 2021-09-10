@@ -35,10 +35,10 @@ class LSTMModel(torch.nn.Module):
         _, batch, features = input_x.size()
 
         # hidden, tensor of shape (D * num_layers, N, H_hidden)
-        hidden = self.init_zeros(batch)
+        hidden = self.init_zeros(batch).cuda()
 
         # cell, tensor of shape (D * num_layers, N, H_hidden)
-        cell = self.init_zeros(batch)
+        cell = self.init_zeros(batch).cuda()
 
         # output tensor (L, N, D * H_hidden)
         output, _ = self.cell(input_x, (hidden, cell))
