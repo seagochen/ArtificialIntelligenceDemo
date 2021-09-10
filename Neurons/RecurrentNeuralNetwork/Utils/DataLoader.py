@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset, DataLoader
 
-from Neurons.Utils.Dataset import load_datasets, cherry_pick_items
+from Neurons.RecurrentNeuralNetwork.Utils.Dataset import load_datasets, cherry_pick_items
 
 
 class MyNameDataset(Dataset):

@@ -1,6 +1,6 @@
 import torch
 
-from Neurons.Utils.Dataset import all_letters
+from Neurons.RecurrentNeuralNetwork.Utils.Dataset import all_letters
 
 
 # Find letter index from all_letters, e.g. "a" = 0

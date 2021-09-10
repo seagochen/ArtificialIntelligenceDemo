@@ -1,7 +1,7 @@
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
-from Neurons.Utils.Transform import line_to_ascii_tensor, line_to_one_hot_tensor, line_to_index
+from Neurons.RecurrentNeuralNetwork.Utils.Transform import line_to_ascii_tensor, line_to_one_hot_tensor, line_to_index
 
 
 def concatenate_tensors(tensor_list):

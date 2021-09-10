@@ -1,8 +1,8 @@
 import torch
+import string
 
 # ASCII codes
-# all_letters = string.ascii_letters + " .,;'"
-all_letters = "helo"
+all_letters = string.ascii_letters + " .,;'"
 n_letters = len(all_letters)
 
 

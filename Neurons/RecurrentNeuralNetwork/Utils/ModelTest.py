@@ -1,5 +1,5 @@
 import torch
-from Neurons.Utils.DataLoader import load_datasets
+from Neurons.RecurrentNeuralNetwork.Utils.DataLoader import load_datasets
 
 
 def category_from_output(output: torch.Tensor):

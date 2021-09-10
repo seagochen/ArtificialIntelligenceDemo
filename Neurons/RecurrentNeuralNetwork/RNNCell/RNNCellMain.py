@@ -18,7 +18,7 @@ def train(epoch, model, optimizer, criterion):
     print("Epoch {} predicated string ".format(epoch), end='')
 
     loss = 0
-    hidden = model.init_hidden()
+    hidden = model.init_zeros()
     optimizer.zero_grad()
 
     for data, label in zip(inputs, labels):
@@ -41,7 +41,7 @@ def test(model, data):
     data = line_to_one_hot_tensor(data)
 
     # generate predicated values
-    hidden = model.init_hidden()
+    hidden = model.init_zeros()
     model.zero_grad()
 
     # send letter one by one to the model
