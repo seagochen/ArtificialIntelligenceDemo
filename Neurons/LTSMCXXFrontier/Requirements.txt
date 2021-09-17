@@ -1,9 +1,0 @@
-Windows 需要以下动态库
-
-asmjit.dll
-c10.dll
-fbgemm.dll
-libiomp5md.dll
-torch_cpu.dll
-
-编译过程需要C++14
