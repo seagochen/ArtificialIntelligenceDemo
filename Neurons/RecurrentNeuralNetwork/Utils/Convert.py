@@ -29,9 +29,13 @@ def to_one_hot_based_tensor(surnames: list, padding=20):
     # return tensors
 
 
-def to_simple_tensor(languages):
+def to_lang_list_tensor(lang_list: list, languages: list):
+    """
+    lang_list: 每一个姓名所对应的语言
+    languages: 语言所在的列表
+    """
     indices = []
-    for lang in languages:
+    for lang in lang_list:
         index = line_to_index(lang, languages)
         indices.append(index)
 

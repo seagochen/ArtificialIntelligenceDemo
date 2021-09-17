@@ -93,7 +93,7 @@ def cherry_pick_items(name_dataset=None):
 
 
 def unit_test():
-    lang_list, surnames = load_datasets("../../Data/NAMES/raw/*.txt")
+    lang_list, surnames = load_datasets("../../../Data/NAMES/raw/*.txt")
     print(lang_list)
     print('max len:', max_length(surnames))
 

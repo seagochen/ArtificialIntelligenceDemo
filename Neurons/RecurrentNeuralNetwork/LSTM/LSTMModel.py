@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as functional
 
 
 class LSTMModel(torch.nn.Module):
@@ -35,49 +36,30 @@ class LSTMModel(torch.nn.Module):
         _, batch, features = input_x.size()
 
         # hidden, tensor of shape (D * num_layers, N, H_hidden)
-        hidden = self.init_zeros(batch).cuda()
+        # hidden = self.init_zeros(batch)
+        hidden = torch.zeros(self.num_layers, batch, self.hidden_size)
 
         # cell, tensor of shape (D * num_layers, N, H_hidden)
-        cell = self.init_zeros(batch).cuda()
+        # cell = self.init_zeros(batch)
+        cell = torch.zeros(self.num_layers, batch, self.hidden_size)
 
         # output tensor (L, N, D * H_hidden)
         output, _ = self.cell(input_x, (hidden, cell))
 
         # convert the shape of output to (N, L * H_hidden)
-        hidden = convert_hidden_shape(output, batch)
+        # hidden = self.convert_hidden_shape(output, torch.tensor(batch))
+        tensor_list = []
+        for i in range(batch):
+            ts = output[:, i, :].reshape(1, -1)
+            tensor_list.append(ts)
+
+        final_output = torch.cat(tensor_list)
 
         # (N, L * H_hidden) to (N, H_out)
-        output = self.linear(hidden)
+        output = self.linear(final_output)
+        output = functional.relu(output)
 
         return output
-
-    def init_zeros(self, batch_size=0, hidden_size=0):
-        if batch_size == 0:
-            batch_size = self.batch_size
-
-        if hidden_size == 0:
-            hidden_size = self.hidden_size
-
-        return torch.zeros(self.num_layers, batch_size, hidden_size)
-
-
-def convert_hidden_shape(hidden, batch_size):
-    """
-    TODO
-
-    用分片方法对批数据进行处理，并重新按照 (N, Features) 方式进行划分未必是最好的方法，
-    未来可以考虑在这里用新的方法替代这里的计算。
-    目前需要确保每个批次的数据都是正确对应各自的数据信息，性能上有很大牺牲
-    """
-
-    tensor_list = []
-
-    for i in range(batch_size):
-        ts = hidden[:, i, :].reshape(1, -1)
-        tensor_list.append(ts)
-
-    ts = torch.cat(tensor_list)
-    return ts
 
 
 def test():

@@ -6,7 +6,7 @@ cmake_minimum_required (VERSION 3.8)
 find_package(Torch REQUIRED)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (LTSMCXXFrontier "LTSMCXXFrontier.cpp" "LTSMCXXFrontier.h")
+add_executable (LTSMCXXFrontier "LTSMCXXFrontier.cpp" "OHVEncoder.cpp")
 
 # 连接库
 target_link_libraries(LTSMCXXFrontier "${TORCH_LIBRARIES}")
