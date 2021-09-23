@@ -9,7 +9,7 @@ def analysis_image_hists(filepath: str):
     return img, img_hist
 
 
-def img_deterioration_test():
+def spatial_noise_analysis():
 
     img_1, hist_1 = analysis_image_hists("./Data/DIP/DIP3E_CH05_Original_Images/DIP3E_CH05_Original_Images/"
                                          "Fig0503 (original_pattern).tif")

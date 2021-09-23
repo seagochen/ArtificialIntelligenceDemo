@@ -47,12 +47,8 @@ def cv_gray_histogram_test():
 
 
 def cv_noise_test():
-    from Cv.Noise.ImageDeterioration import img_deterioration_test
     from Cv.Noise.NoiseGenerator import noise_generator_test
     from Cv.Noise.PoissonNoise import poisson_noise_test
-
-    # image deterioration
-    img_deterioration_test()
 
     # salt pepper and gaussian
     noise_generator_test()
@@ -67,6 +63,17 @@ def cv_spatial_filters():
 
     median_filter_test()
     laplacian_op_test()
+
+
+def cv_image_deterioration():
+    from Cv.Degradation.SpatialNoise import spatial_noise_analysis
+    from Cv.Degradation.FrequencyNoise import frequency_noise_analysis
+
+    # image spatial noise deterioration
+    spatial_noise_analysis()
+
+    # image frequency noise deterioration
+    frequency_noise_analysis()
 
 
 if __name__ == "__main__":
