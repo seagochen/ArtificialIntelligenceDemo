@@ -91,8 +91,8 @@ def display_result(diagrams):
 if __name__ == "__main__":
 
     # load image from file
-    img = load_image_gray("../../Data/DIP/DIP3E_CH05_Original_Images/DIP3E_CH05_Original_Images/Fig0525(a)("
-                          "aerial_view_no_turb).tif")
+    img = load_image_gray(
+        "../../Data/DIP/DIP3E_CH05_Original_Images/DIP3E_CH05_Original_Images/Fig0525(a)(aerial_view_no_turb).tif")
 
     img_with_0025 = turbulence_analysis(img, 0.0025)
     img_with_001 = turbulence_analysis(img, 0.001)
