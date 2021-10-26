@@ -59,7 +59,7 @@ def update_dft_with_degradation(dft, kernel):
     return dft_backup
 
 
-def turbulence_analysis(img, k):
+def turbulence_deterioration(img, k):
 
     # convert byte to float
     dft = cv2.dft(np.float32(img), flags=cv2.DFT_COMPLEX_OUTPUT)
@@ -94,8 +94,8 @@ if __name__ == "__main__":
     img = load_image_gray(
         "../../Data/DIP/DIP3E_CH05_Original_Images/DIP3E_CH05_Original_Images/Fig0525(a)(aerial_view_no_turb).tif")
 
-    img_with_0025 = turbulence_analysis(img, 0.0025)
-    img_with_001 = turbulence_analysis(img, 0.001)
-    img_with_00025 = turbulence_analysis(img, 0.00025)
+    img_with_0025 = turbulence_deterioration(img, 0.0025)
+    img_with_001 = turbulence_deterioration(img, 0.001)
+    img_with_00025 = turbulence_deterioration(img, 0.00025)
 
     display_result((img, img_with_0025, img_with_001, img_with_00025))
