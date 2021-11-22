@@ -1,8 +1,6 @@
 siki
-pandas
 opencv-python
-sklearn
-numpy
 torch
 torchvision
-pytorch-nlp
+torchtext
+matplotlib
