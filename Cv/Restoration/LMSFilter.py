@@ -23,17 +23,11 @@ def create_parameters(dft):
     # generate empty matrix
     weight = np.ones_like(dft, dtype=np.float32)
 
-    # generate an error matrix
-    errors = np.zeros_like(dft, dtype=np.float32)
-
     # return to caller
-    return weight, errors
+    return weight
 
 
 def compute_loss(dft_predicated, dft_target):
-    # to avoid data exception, we calculate the average sum of MSE
-    # size = dft_predicated.shape[0] * dft_predicated.shape[1]
-
     # compute mse of original and recovery images
     new_errors = (dft_predicated - dft_target)**2
 
@@ -45,7 +39,6 @@ def backward(weights, dft_predicated, dft_target, lambs):
 
     # update value chain
     updated_val = np.absolute(lambs * (dft_predicated - dft_target))
-    # print("updated_val:", updated_val.tolist())
 
     width, height, channel = dft_predicated.shape
     for w in range(width):
@@ -119,36 +112,23 @@ def normalize_data(dft1, dft2):
     dft1 = dft1 / length * 100.0
     dft2 = dft2 / length * 100.0
 
-    return dft1, dft2
+    return dft1, dft2, length
 
 
 def gradient_descent(img, distort):
 
-    # dft_origin = img_to_dft(img)
-    # dft_distort = img_to_dft(distort)
-
-    dft_origin, dft_distort = normalize_data(img_to_dft(img), img_to_dft(distort))
-
-    # dft_origin = (np.random.rand(1, 1000, 1000) - 0.5) * 10  # as X
-    # dft_distort = (np.random.rand(1, 1000, 1000) - 0.5) * 10  # as Y
-
-    # print("original:", dft_origin.tolist())
-    # print("target:", dft_distort.tolist(), "\n\n")
+    dft_origin, dft_distort, length = normalize_data(img_to_dft(img), img_to_dft(distort))
 
     # lambda rate
     lambs = 0.01
 
     # create weight matrices for real and image parts of DFT and set update rate to 0.015
-    weight, prev_errors = create_parameters(dft_origin)
+    weight = create_parameters(dft_origin)
 
     # loop and descent gradients for both real and image weights
-    for i in range(50):
+    for i in range(500):
 
         dft_predicated = forward(weight, dft_origin)
-        # print("original:", dft_origin.tolist())
-        # print("weights:", weight.tolist())
-        # print("predicated:", dft_predicated.tolist())
-        # print("target:", dft_distort.tolist())
 
         # compute loss
         mse = compute_loss(dft_predicated, dft_distort)
@@ -160,7 +140,7 @@ def gradient_descent(img, distort):
         print("mse: %.4f" % mse)
         # print("\n")
 
-    return weight
+    return weight * length
 
 
 def display_result(diagrams):
@@ -175,14 +155,18 @@ def display_result(diagrams):
 
 
 def recovery_image(img, distorted, disrecv):
+    # copy backup
+    distorted_backup = distorted.copy()
 
     # obtain weight
-    weight = gradient_descent(img, distorted)
+    weight = gradient_descent(img, distorted_backup)
 
+    # use LMS filter to recovery distorted image
     dft = img_to_dft(distorted)
     dft = dft / weight
     img_ds = dft_to_img(dft)
 
+    # show result
     display_result((img, distorted, disrecv, img_ds))
 
 
