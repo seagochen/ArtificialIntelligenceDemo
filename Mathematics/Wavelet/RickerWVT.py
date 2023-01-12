@@ -13,34 +13,49 @@ duration = 1.0
 time = np.linspace(0, duration, num_samples)
 signal = np.sin(2 * np.pi * 10 * time) + np.sin(2 * np.pi * 5 * time) + np.sin(2 * np.pi * 1 * time)
 
-# 计算小波函数数组
-wavelet_1 = base_wavelet_ricker(1, num_samples)
-wavelet_5 = base_wavelet_ricker(5, num_samples)
-wavelet_10 = base_wavelet_ricker(10, num_samples)
+# 绘制原始信号
+# plt.plot(time, signal)
+# plt.xlabel('Time (s)')
+# plt.ylabel('Amplitude')
+# plt.show()
 
-# 使用小波函数进行卷积
-result_1 = np.convolve(signal, wavelet_1, mode='same')
-result_5 = np.convolve(signal, wavelet_5, mode='same')
-result_10 = np.convolve(signal, wavelet_10, mode='same')
+# 对原始信号的频率进行分析
+# spectrum = np.fft.fft(signal) # 计算信号的频谱
+# freq = np.fft.fftfreq(signal.size, d=duration/num_samples) # 计算频率数组
 
-# 绘制小波变换结果
-plt.plot(time, result_1, label='1Hz')
-plt.plot(time, result_5, label='5Hz')
-plt.plot(time, result_10, label='10Hz')
+# 绘制原始信号的频谱
+# plt.plot(freq, np.abs(spectrum))
+# plt.xlabel('Frequency')
+# plt.ylabel('Amplitude')
+# plt.show()
 
-plt.legend()
-plt.show()
+# 分别使用1-16Hz的小波函数对信号进行小波变换
+wavelets = []
+for i in range(1, 17):
+    wavelet = base_wavelet_ricker(i, num_samples, duration)
+    wavelets.append(wavelet)
 
-# 将得到的结果与小波函数进行卷积，得到原始信号
-result_1 = np.convolve(result_1, wavelet_1, mode='same')
-result_5 = np.convolve(result_5, wavelet_5, mode='same')
-result_10 = np.convolve(result_10, wavelet_10, mode='same')
+# 使用阈值法，对小波变换后的信号成分进行筛选
+threshold = 0.5
+results = []
+for i in range(len(wavelets)):
+    result = np.convolve(signal, wavelets[i], mode='same') # 使用小波函数进行卷积
+    result = np.convolve(result, wavelets[i], mode='same') # 使用逆卷积判断信号成分的有效性
+    result[np.abs(result) < threshold] = 0
+    results.append(result)
 
+# 创建三维坐标轴对象
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
 
-# 绘制小波逆变换结果
-plt.plot(time, result_1, label='1Hz')
-plt.plot(time, result_5, label='5Hz')
-plt.plot(time, result_10, label='10Hz')
+# 绘制小波时频图
+X, Y = np.meshgrid(time, range(1, 17))
+ax.plot_surface(X, Y, np.array(results), cmap='rainbow')
 
-plt.legend()
+# 设置坐标轴标签
+ax.set_xlabel('Time (s)')
+ax.set_ylabel('Frequency (Hz)')
+ax.set_zlabel('Amplitude')
+
+# 显示图像
 plt.show()
