@@ -1,4 +1,3 @@
-siki
 opencv-python
 torch
 torchvision
